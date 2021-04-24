@@ -1,3 +1,13 @@
+"""
+This file contains the logic to pull hashtag information from instagram. 
+To get the hashtag id for a given hashtag, getHashtagInfo can be called.
+To get a certain number of posts for a given hashtag, call hashtagMediaWrapper, 
+which will query the hashtag id, then make api calls until the requested number of recent posts has been found.
+
+You can run this program as a standalone as well, which will take a hashtag from stdin, request 25 posts, and then insert those posts into a mongodb instance
+running on localhost.
+"""
+
 import os, csv
 import time
 from defines import getCreds, makeApiCall
@@ -33,8 +43,6 @@ def hashtagMediaWrapper(hashtag_name, count=25):
         ,'access_token':params['access_token']
         ,'limit':count
     }
-
-    
 
     #Get the ID for the requested hashtag
     hashtagInfoResponse = getHashtagInfo(params, hashtag_name) 

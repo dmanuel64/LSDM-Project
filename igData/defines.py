@@ -1,3 +1,7 @@
+'''
+This file sets up the basic environment needed to pull data from the instagram API. This includes access credentials and basic api endpoint URLS, along with api call functions.
+A significant portion of this code came from https://github.com/imakashsahu/Instagram-Graph-API-Python/, although it has been heavily modified. 
+'''
 import requests
 import json
 import os
@@ -23,7 +27,7 @@ def getCreds() :
 	creds['endpoint_base'] = getEndpointBase(creds)
 	return creds
 
-def makeApiCall( url, endpointParams, debug = 'no' ) :
+def makeApiCall(url, endpointParams, debug = 'no') :
 
 	data = requests.get( url, endpointParams ) # make get request
 
