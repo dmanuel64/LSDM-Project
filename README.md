@@ -7,6 +7,10 @@ CS 4243 - Large-Scale Data Management Spring 2021 Project (Front-End)
 python -m pip install Django
 ```
 
+**For ease of use, you can install requirements from the provided file** Using pip:
+```
+python -m pip install -r requirements.txt
+```
 ## Usage
 Run the start_web_app.bash bash script to start the web server:
 ```
