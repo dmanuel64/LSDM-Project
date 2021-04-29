@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from pymongo import MongoClient
 from django.contrib.auth import authenticate,login, logout
+from django.contrib.auth.models import User
 from mysite.models import Post
 import logging
 logger = logging.getLogger(__name__)
@@ -15,23 +16,34 @@ def load_database():
     conn = MongoClient(server,port)
     print(conn)
 def signup(request):
-    username = request.POST.get('username')
-    password = request.POST.get('passsword')
-    user = authenticate(username=username, password=password)
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('index.html')
+            new_user = User.objects.create_user(username, username, raw_password)
+            new_user.save()
+            login(request, new_user)
+            return redirect('/index.html')
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 def login_page(request):
-    return render(request, 'login.html')
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            form = AuthenticationForm(request=request, data=request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                upass = form.cleaned_data['password']
+                user = authenticate(username=username, password=upass)
+                if user is not None:
+                    login(request, user)
+                    return redirect('/')
+        else:
+            form = AuthenticationForm()
+        return render(request, 'login.html', {'form': form})
+    else:
+        return redirect('/')
 def forgot(request):
     return render(request, 'forgot-password.html')
 def chart(request):

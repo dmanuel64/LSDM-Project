@@ -27,5 +27,6 @@ urlpatterns = [
     path('forgot-password/', views.forgot, name="forgot-password"),
     path('charts/', views.chart,name="charts"),
     path('tables/', views.tables,name="tables"),
-    path('admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls'))
 ]

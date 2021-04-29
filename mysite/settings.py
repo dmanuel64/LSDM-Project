@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'rest_framework'
+    'rest_framework',
+    'mysite'
 ]
 
 MIDDLEWARE = [
@@ -134,6 +135,7 @@ DEGUG = True
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 LOGIN_REDIRECT_URL =  '/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
