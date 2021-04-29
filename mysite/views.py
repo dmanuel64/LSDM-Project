@@ -24,7 +24,7 @@ def signup(request):
             new_user = User.objects.create_user(username, username, raw_password)
             new_user.save()
             login(request, new_user)
-            return redirect('/index.html')
+            return redirect('/')
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
