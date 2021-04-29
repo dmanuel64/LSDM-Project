@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -75,9 +77,13 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+   'default': {
+      'ENGINE': 'djongo',
+      'NAME': 'lsdm',
+      'host': 'localhost',
+      'port': 27017,
+      'username': 'lsdmuser',
+      'password': '!lsdm2021',
     }
 }
 
@@ -126,5 +132,23 @@ DEGUG = True
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
+LOGIN_REDIRECT_URL =  '/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

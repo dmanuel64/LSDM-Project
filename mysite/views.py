@@ -1,11 +1,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
-
+from pymongo import MongoClient
+from django.contrib.auth import authenticate,login, logout
+from mysite.models import Post
+import logging
+logger = logging.getLogger(__name__)
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
+def load_database():
+    server="localhost"
+    port = 27017
+    conn = MongoClient(server,port)
+    print(conn)
 def signup(request):
+    username = request.POST.get('username')
+    password = request.POST.get('passsword')
+    user = authenticate(username=username, password=password)
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
