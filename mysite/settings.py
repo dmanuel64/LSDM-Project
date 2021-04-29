@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-y4k_q1*(v#)(v&cbcq$q%l1ar&x76!g2%6qh&xktqz+c2^oi_n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['129.114.17.31', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['129.114.17.31', '127.0.0.1', 'localhost', 'trackingcovid.class.utsa.edu']
 
 
 # Application definition
