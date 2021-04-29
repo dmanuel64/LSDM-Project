@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from pymongo import MongoClient
@@ -30,7 +30,7 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
-def login(request):
+def login_page(request):
     return render(request, 'login.html')
 def forgot(request):
     return render(request, 'forgot-password.html')
