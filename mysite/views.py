@@ -5,10 +5,18 @@ from pymongo import MongoClient
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.models import User
 from mysite.models import Post
+from pythonScripts import twitterCollection
+from pythonScripts import googletrends
 import logging
 logger = logging.getLogger(__name__)
 # Create your views here.
 def index(request):
+    return render(request, 'index.html')
+def search(request):
+    if request.method == 'POST':
+        get_text = request.POST.get('searchInput')
+        twitterCollection.twitter(get_text)
+        googletrends.google(get_text)
     return render(request, 'index.html')
 def load_database():
     server="localhost"
