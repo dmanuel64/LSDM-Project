@@ -2,3 +2,4 @@ Django
 pymongo
 django-rest-framework
 django-crispy-forms
+djongo
