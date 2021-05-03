@@ -84,17 +84,9 @@ def forgot(request):
 def tweet_chart(request):
     bar = visualization.Bar()
 
-    results = bar.tweets_bar()
-    bar_labels = results[0]
-    bar_data = results[1]
-    
-    results = bar.per_day()
-    bar2_labels = results[0]
-    bar2_data = results[1]
-
-    results = bar.monthly_tweets()
-    line_labels = results[0]
-    line_data = results[1]
+    bar_labels, bar_data = bar.tweets_bar()
+    bar2_labels, bar2_data = bar.per_day()
+    line_labels, line_data = bar.monthly_tweets()
     
     all_data = {"line_labels": line_labels,"line_data": line_data, "bar_labels": bar_labels, "bar_data":bar_data, 
                     "bar2_labels": bar2_labels, "bar2_data":bar2_data }
@@ -105,21 +97,10 @@ def hashtags_chart(request):
     pie = visualization.Pie()
     bar = visualization.Bar()
 
-    results = pie.top_pie(5, "hashtags")
-    pie_labels = results[0]
-    pie_data = results[1]
-
-    results = bar.top_hashtag(5)
-    bar_labels = results[0]
-    bar_data = results[1]    
-
-    results = bar.hashtag_retweet(5)
-    bar2_labels = results[0]
-    bar2_data = results[1]
-    
-    results = bar.hashtag_favorite(5)
-    bar3_labels = results[0]
-    bar3_data = results[1]
+    pie_labels, pie_data = pie.top_pie(5, "hashtags")
+    bar_labels, bar_data = bar.top_hashtag(5)
+    bar2_labels, bar2_data = bar.hashtag_retweet_favorite("retweets", 5)
+    bar3_labels, bar3_data = bar.hashtag_retweet_favorite("favorites", 5)
 
     all_data = {"pie_labels":pie_labels, "pie_data":pie_data, "bar_labels": bar_labels,"bar_data": bar_data,
                     "bar2_labels": bar2_labels, "bar2_data":bar2_data, "bar3_labels": bar3_labels, "bar3_data":bar3_data}
@@ -130,46 +111,46 @@ def engagement_chart(request):
     bar = visualization.Bar()
     line = visualization.Line()
 
-    results = line.month_engagement()
-    line_labels = results[0]
-    line_data = results[1]    
-
-    results = bar.daily_engagement("total_engagement")
-    bar_labels = results[0]
-    bar_data = results[1]
-
-    results = bar.daily_engagement("retweets")
-    bar2_labels = results[0]
-    bar2_data = results[1]
-
-    results = bar.daily_engagement("favorites")
-    bar3_labels = results[0]
-    bar3_data = results[1]
+    line_labels, line_data = line.month_engagement()    
+    bar_labels, bar_data = bar.daily_engagement("total_engagement")
+    bar2_labels, bar2_data = bar.daily_engagement("retweets")
+    bar3_labels, bar3_data = bar.daily_engagement("favorites")
 
     all_data = {"line_labels":line_labels, "line_data":line_data, "bar_labels": bar_labels, "bar_data":bar_data,
                     "bar2_labels": bar2_labels, "bar2_data":bar2_data, "bar3_labels": bar3_labels, "bar3_data":bar3_data}
 
     return render(request, 'engagement-charts.html', all_data)
 
+def sentiment_chart(request):
+    bar = visualization.Bar()
+    line = visualization.Line() 
+    pie = visualization.Pie()
+
+    pie_labels, pie_data = pie.sentiment_pie()
+    bar_labels, bar_data = bar.accounts_sentiment("positive", 10)
+    bar2_labels, bar2_data = bar.accounts_sentiment("neutral", 10)
+    bar3_labels, bar3_data = bar.accounts_sentiment("negative",10)
+    bar4_labels, bar4_data = bar.sentiment_bar()
+    line_labels, line_data = line.sentiment_date("positive")
+    line2_labels, line2_data = line.sentiment_date("neutral")
+    line3_labels, line3_data = line.sentiment_date("negative")
+
+    all_data = {"pie_labels":pie_labels, "pie_data":pie_data, 
+                    "bar_labels": bar_labels, "bar_data":bar_data, "bar2_labels": bar2_labels, "bar2_data":bar2_data, 
+                    "bar3_labels": bar3_labels, "bar3_data":bar3_data, "bar4_labels": bar4_labels, "bar4_data":bar4_data, 
+                        "line_labels": line_labels,"line_data": line_data, "line2_labels": line2_labels,"line2_data": line2_data,
+                            "line3_labels": line3_labels,"line3_data": line3_data}
+
+    return render(request, 'sentiment-charts.html', all_data)    
+
 def source_chart(request):
     bar = visualization.Bar()
     pie = visualization.Pie()
 
-    results = pie.top_pie(5, "source")
-    pie_labels = results[0]
-    pie_data = results[1] 
-
-    results = pie.top_pie(5, "user_location")
-    pie2_labels = results[0]
-    pie2_data = results[1] 
-
-    results = bar.source_max(5)
-    bar_labels = results[0]
-    bar_data = results[1] 
-
-    results = bar.top_location(5)
-    bar2_labels = results[0]
-    bar2_data = results[1]     
+    pie_labels, pie_data = pie.top_pie(5, "source")
+    pie2_labels, pie2_data = pie.top_pie(5, "user_location")
+    bar_labels, bar_data = bar.source_max(5)
+    bar2_labels, bar2_data = bar.top_location(5)  
 
     all_data = {"pie_labels":pie_labels, "pie_data":pie_data, "pie2_labels":pie2_labels, "pie2_data":pie2_data,
                     "bar_labels": bar_labels, "bar_data":bar_data, "bar2_labels": bar2_labels, "bar2_data":bar2_data }
@@ -180,25 +161,11 @@ def account_chart(request):
     bar = visualization.Bar()
     pie = visualization.Pie()
 
-    results = pie.verified_pie()
-    pie_labels = results[0]
-    pie_data = results[1] 
-
-    results = bar.verified_bar()
-    bar_labels = results[0]
-    bar_data = results[1] 
-
-    results = bar.user_engagement_bar("total_engagement")
-    bar1_labels = results[0]
-    bar1_data = results[1]
-
-    results = bar.user_engagement_bar("retweets")
-    bar2_labels = results[0]
-    bar2_data = results[1]
-
-    results = bar.user_engagement_bar("favorites")
-    bar3_labels = results[0]
-    bar3_data = results[1]
+    pie_labels, pie_data = pie.verified_pie()
+    bar_labels, bar_data = bar.verified_bar()
+    bar1_labels, bar1_data = bar.user_engagement_bar("total_engagement")
+    bar2_labels, bar2_data = bar.user_engagement_bar("retweets")
+    bar3_labels, bar3_data = bar.user_engagement_bar("favorites")
 
     all_data = {"pie_labels":pie_labels, "pie_data":pie_data, "bar_labels": bar_labels, "bar_data":bar_data,
                     "bar1_labels": bar1_labels, "bar1_data":bar1_data,"bar2_labels": bar2_labels, "bar2_data":bar2_data,

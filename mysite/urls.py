@@ -31,6 +31,7 @@ urlpatterns = [
     path('engagement-charts/', views.engagement_chart,name="engagement-charts"),
     path('account-charts/', views.account_chart,name="account-charts"),
     path('source-charts/', views.source_chart,name="source-charts"),
+    path('sentiment-charts/', views.sentiment_chart,name="sentiment-charts"),    
     path('charts/', views.tweet_chart,name="charts"),
     path('tables/', views.tables,name="tables"),
     path('admin/', admin.site.urls),
