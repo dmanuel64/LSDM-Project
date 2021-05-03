@@ -26,7 +26,12 @@ urlpatterns = [
     path('', views.load_database, name="load_database"),
     path('register/', views.signup, name="register"),
     path('forgot-password/', views.forgot, name="forgot-password"),
-    path('charts/', views.chart,name="charts"),
+    path('tweet-charts/', views.tweet_chart,name="tweet-charts"),
+    path('hashtags-charts/', views.hashtags_chart,name="hashtags-charts"),
+    path('engangement-charts/', views.engangement_chart,name="engangement-charts"),
+    path('account-charts/', views.account_chart,name="account-charts"),
+    path('source-charts/', views.source_chart,name="source-charts"),
+    path('charts/', views.tweet_chart,name="charts"),
     path('tables/', views.tables,name="tables"),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls'))

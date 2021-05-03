@@ -28,19 +28,24 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 // Bar Chart Example
-var ctx = document.getElementById("myBarChart");
-var myBarChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ["January", "February", "March", "April", "May", "June"],
+var config = {
+  // labels: ["January", "February", "March", "April", "May", "June", "July"],
+  labels: {{ labels|safe }},
     datasets: [{
       label: "Revenue",
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
-      data: [4215, 5312, 6251, 7841, 9821, 14984],
-    }],
-  },
+      data: {{ data|safe }},
+      // data: {output},
+  }]
+};
+
+var ctx = document.getElementById("myBarChart");
+
+var myBarChart = new Chart(ctx, {
+  type: 'bar',
+  data: config,
   options: {
     maintainAspectRatio: false,
     layout: {
@@ -68,7 +73,7 @@ var myBarChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 15000,
+          // max: 1000,
           maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
@@ -109,3 +114,19 @@ var myBarChart = new Chart(ctx, {
     },
   }
 });
+
+// var myBarChart = new Chart(ctx, {
+//   type: "bar",
+//   data: data,
+// });
+
+// var newDataset = {
+//   label: "Vendas",
+//   backgroundColor: 'rgba(99, 255, 132, 0.2)',
+//   borderColor: 'rgba(99, 255, 132, 1)',
+//   borderWidth: 1,
+//   data: [10, 20, 30, 40, 50, 60, 70],
+// }
+
+// data.datasets.push(newDataset);
+// myBarChart.update();

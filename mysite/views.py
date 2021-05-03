@@ -1,3 +1,4 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -7,6 +8,9 @@ from django.contrib.auth.models import User
 from mysite.models import Post
 from pythonScripts import twitterCollection
 from pythonScripts import googletrends
+import simplejson as json
+from mysite import visualization
+
 import logging
 logger = logging.getLogger(__name__)
 # Create your views here
@@ -77,9 +81,103 @@ def forgot(request):
     return render(request, 'forgot-password.html')
 
 
-def chart(request):
-    return render(request, 'charts.html')
+def tweet_chart(request):
+    bar = visualization.Bar()
 
+    results = bar.tweets_bar()
+    bar_labels = results[0]
+    bar_data = results[1]
+    
+    results = bar.per_day()
+    bar2_labels = results[0]
+    bar2_data = results[1]
+
+    results = bar.month_engagement()
+    line_labels = results[0]
+    line_data = results[1]
+    
+    all_data = {"line_labels": line_labels,"line_data": line_data, "bar_labels": bar_labels, "bar_data":bar_data, 
+                    "bar2_labels": bar2_labels, "bar2_data":bar2_data }
+
+    return render(request, 'tweet-charts.html', all_data)
+
+def hashtags_chart(request):
+    pie = visualization.Pie()
+    bar = visualization.Bar()
+
+    results = pie.top_pie(5, "hashtags")
+    pie_labels = results[0]
+    pie_data = results[1]
+
+    results = bar.top_hashtag(5)
+    bar_labels = results[0]
+    bar_data = results[1]    
+
+    results = bar.hashtag_retweet(5)
+    bar2_labels = results[0]
+    bar2_data = results[1]
+    
+    results = bar.hashtag_favorite(5)
+    bar3_labels = results[0]
+    bar3_data = results[1]
+
+    all_data = {"pie_labels":pie_labels, "pie_data":pie_data, "bar_labels": bar_labels,"bar_data": bar_data,
+                    "bar2_labels": bar2_labels, "bar2_data":bar2_data, "bar3_labels": bar3_labels, "bar3_data":bar3_data}
+
+    return render(request, 'hashtags-charts.html', all_data)
+
+def engangement_chart(request):
+    bar = visualization.Bar()
+    line = visualization.Line()
+
+    results = line.day_engagement()
+    line_labels = results[0]
+    line_data = results[1]    
+
+    all_data = {"line_labels":line_labels, "line_data":line_data}
+
+    return render(request, 'engangement-charts.html', all_data)
+
+def source_chart(request):
+    bar = visualization.Bar()
+    pie = visualization.Pie()
+
+    results = pie.top_pie(5, "source")
+    pie_labels = results[0]
+    pie_data = results[1] 
+
+    results = pie.top_pie(5, "user_location")
+    pie2_labels = results[0]
+    pie2_data = results[1] 
+
+    results = bar.source_max(5)
+    bar_labels = results[0]
+    bar_data = results[1] 
+
+    results = bar.top_location(5)
+    bar2_labels = results[0]
+    bar2_data = results[1]     
+
+    all_data = {"pie_labels":pie_labels, "pie_data":pie_data, "pie2_labels":pie2_labels, "pie2_data":pie2_data,
+                    "bar_labels": bar_labels, "bar_data":bar_data, "bar2_labels": bar2_labels, "bar2_data":bar2_data }
+
+    return render(request, 'source-charts.html', all_data)    
+
+def account_chart(request):
+    bar = visualization.Bar()
+    pie = visualization.Pie()
+
+    results = pie.verified_pie()
+    pie_labels = results[0]
+    pie_data = results[1] 
+
+    results = bar.verified_bar()
+    bar_labels = results[0]
+    bar_data = results[1] 
+
+    all_data = {"pie_labels":pie_labels, "pie_data":pie_data, "bar_labels": bar_labels, "bar_data":bar_data}
+
+    return render(request, 'account-charts.html', all_data)   
 
 def tables(request):
     return render(request, 'tables.html')

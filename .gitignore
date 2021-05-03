@@ -5,6 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
+*.ipynb
 
 # Distribution / packaging
 .Python
@@ -12,6 +13,8 @@ build/
 develop-eggs/
 dist/
 downloads/
+mysite/figures
+mysite/data
 eggs/
 .eggs/
 lib/
@@ -119,6 +122,7 @@ venv.bak/
 
 # mkdocs documentation
 /site
+/figures
 
 # mypy
 .mypy_cache/
