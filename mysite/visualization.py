@@ -65,7 +65,7 @@ class Bar:
 
         return (list(timeline['date'].values), list(timeline['count'].values), title)
 
-    def sentiment_bar(self, df):
+    def sentiment_bar(self, sentiment_type):
         df=pd.read_csv('vaccination_tweets.csv')
         df = df.drop_duplicates('text')
         df['date'] = pd.to_datetime(df['date']).dt.date
