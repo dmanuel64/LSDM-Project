@@ -29,7 +29,7 @@ class Bar:
         plt.savefig(os.path.join(self.bar_dir, title + ".png"))        
         return
 
-    def month_engagement(self):
+    def monthly_tweets(self):
         df=pd.read_csv('data/vaccination_tweets.csv')
         df['date']=pd.to_datetime(df.date)
         df = df.sort_values(by='date')
@@ -90,26 +90,26 @@ class Bar:
         self.plot_bar(timeline, x, y, title='polarity')
         self.plot_bar(timeline, x, y, title='subjectivity')
 
-    def engagement_bar(self, engangement_type):
+    def user_engagement_bar(self, engagement_type):
         df=pd.read_csv('data/vaccination_tweets.csv')
         df['total_engagement']=df['retweets']+df['favorites']
 
         x = "user_name"
-        title = "Account " + engangement_type
+        title = "Account " + engagement_type
 
-        if engangement_type == "retweets":
+        if engagement_type == "retweets":
             data = df.groupby('user_name',as_index=False).agg({'retweets':'sum'}).sort_values('retweets',ascending=False).head(10)
             y = "retweets"
-        elif engangement_type == "favorites":
+        elif engagement_type == "favorites":
             data = df.groupby('user_name',as_index=False).agg({'favorites':'sum'}).sort_values('favorites',ascending=False).head(10)
-            y = "retweets"
-        elif engangement_type == "total_engagement":
+            y = "favorites"
+        elif engagement_type == "total_engagement":
             data = df.groupby('user_name',as_index=False).agg({'total_engagement':'sum'}).sort_values('total_engagement',ascending=False).head(10)
             y = "total_engagement"            
 
         # self.plot_bar(data, x, y, title)
 
-        return(data)
+        return (list(data['user_name'].values), list(data[y].values))
 
     def verified_bar(self):
         df = pd.read_csv("data/vaccination_tweets.csv")
@@ -235,6 +235,27 @@ class Bar:
         # return (list(data.index), list(data.values))
         return (list(data[1]), list(data[0]))
 
+    def daily_engagement(self, engagement_type):
+        df = pd.read_csv("data/vaccination_tweets.csv")
+        df['date']=pd.to_datetime(df['date'])
+
+        if engagement_type == "total_engagement":
+            df['total_engagement']=df['retweets']+df['favorites']
+            df = df.sort_values(by='date')
+            df['date'] = df['date'].dt.strftime('%d/%m/%y')       
+            day_month = df.groupby('date', sort=False, as_index=False).agg({'total_engagement':'sum'})
+        elif engagement_type == "retweets":
+            df = df.sort_values(by='date')
+            df['date'] = df['date'].dt.strftime('%d/%m/%y')       
+            day_month = df.groupby('date', sort=False, as_index=False).agg({'retweets':'sum'})
+        elif engagement_type == "favorites":
+            df = df.sort_values(by='date')
+            df['date'] = df['date'].dt.strftime('%d/%m/%y')       
+            day_month = df.groupby('date', sort=False, as_index=False).agg({'favorites':'sum'})            
+
+
+        # self.plot_line(x, y, day_month, title)
+        return (list(day_month['date'].values), list(day_month[engagement_type].values))   
     # print(f" Data Available since {df.date.min()}")
     # print(f" Data Available upto {df.date.max()}")
 
@@ -434,26 +455,20 @@ class Line:
         
         return
 
-    def day_engagement(self):
+    def month_engagement(self):
         df = pd.read_csv("data/vaccination_tweets.csv")
         df['date']=pd.to_datetime(df['date'])
         df['total_engagement']=df['retweets']+df['favorites']
 
         df = df.sort_values(by='date')
         df['date'] = df['date'].dt.strftime('%m/%y')       
-        # monthDict={1:'January', 2:'February', 3:'March', 4:'April', 5:'May', 6:'June', 7:'July', 8:'August', 9:'September', 10:'October', 11:'November', 12:'December'}
-        # L = ['year', 'month', 'day', 'dayofweek', 'dayofyear', 'weekofyear', 'quarter']
-
-        # df = df.join(pd.concat((getattr(df['date'].dt, i).rename(i) for i in L), axis=1))
-        # month = df.loc[df['month']==no_month]
         day_month = df.groupby('date', sort=False, as_index=False).agg({'total_engagement':'sum'})
 
         x='day'
         y='total_engagement'
-        # title = 'Most engage days in' + monthDict[no_month]
 
         # self.plot_line(x, y, day_month, title)
-        return (list(day_month['date'].values), list(day_month['total_engagement'].values))
+        return (list(day_month['date'].values), list(day_month['total_engagement'].values))     
 
     def tweet_day_year(self, df):
         L = ['year', 'month', 'day', 'dayofweek', 'dayofyear', 'weekofyear', 'quarter']

@@ -92,7 +92,7 @@ def tweet_chart(request):
     bar2_labels = results[0]
     bar2_data = results[1]
 
-    results = bar.month_engagement()
+    results = bar.monthly_tweets()
     line_labels = results[0]
     line_data = results[1]
     
@@ -126,17 +126,30 @@ def hashtags_chart(request):
 
     return render(request, 'hashtags-charts.html', all_data)
 
-def engangement_chart(request):
+def engagement_chart(request):
     bar = visualization.Bar()
     line = visualization.Line()
 
-    results = line.day_engagement()
+    results = line.month_engagement()
     line_labels = results[0]
     line_data = results[1]    
 
-    all_data = {"line_labels":line_labels, "line_data":line_data}
+    results = bar.daily_engagement("total_engagement")
+    bar_labels = results[0]
+    bar_data = results[1]
 
-    return render(request, 'engangement-charts.html', all_data)
+    results = bar.daily_engagement("retweets")
+    bar2_labels = results[0]
+    bar2_data = results[1]
+
+    results = bar.daily_engagement("favorites")
+    bar3_labels = results[0]
+    bar3_data = results[1]
+
+    all_data = {"line_labels":line_labels, "line_data":line_data, "bar_labels": bar_labels, "bar_data":bar_data,
+                    "bar2_labels": bar2_labels, "bar2_data":bar2_data, "bar3_labels": bar3_labels, "bar3_data":bar3_data}
+
+    return render(request, 'engagement-charts.html', all_data)
 
 def source_chart(request):
     bar = visualization.Bar()
@@ -175,7 +188,21 @@ def account_chart(request):
     bar_labels = results[0]
     bar_data = results[1] 
 
-    all_data = {"pie_labels":pie_labels, "pie_data":pie_data, "bar_labels": bar_labels, "bar_data":bar_data}
+    results = bar.user_engagement_bar("total_engagement")
+    bar1_labels = results[0]
+    bar1_data = results[1]
+
+    results = bar.user_engagement_bar("retweets")
+    bar2_labels = results[0]
+    bar2_data = results[1]
+
+    results = bar.user_engagement_bar("favorites")
+    bar3_labels = results[0]
+    bar3_data = results[1]
+
+    all_data = {"pie_labels":pie_labels, "pie_data":pie_data, "bar_labels": bar_labels, "bar_data":bar_data,
+                    "bar1_labels": bar1_labels, "bar1_data":bar1_data,"bar2_labels": bar2_labels, "bar2_data":bar2_data,
+                        "bar3_labels": bar3_labels, "bar3_data":bar3_data}
 
     return render(request, 'account-charts.html', all_data)   
 
