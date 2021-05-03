@@ -25,8 +25,8 @@ class Bar:
 
     def plot_sns(self, data, x, title):
         plt.figure(figsize=(8, 8))
-        sns.countplot(x=x, data=data)
-        plt.savefig(os.path.join(self.bar_dir, title + ".png"))        
+        # sns.countplot(x=x, data=data)
+        # plt.savefig(os.path.join(self.bar_dir, title + ".png"))        
         return
 
     def monthly_tweets(self):
@@ -87,8 +87,8 @@ class Bar:
         x='date'
         y='count'
         
-        self.plot_bar(timeline, x, y, title='polarity')
-        self.plot_bar(timeline, x, y, title='subjectivity')
+        # self.plot_bar(timeline, x, y, title='polarity')
+        # self.plot_bar(timeline, x, y, title='subjectivity')
 
     def user_engagement_bar(self, engagement_type):
         df=pd.read_csv('data/vaccination_tweets.csv')
@@ -282,20 +282,20 @@ class Bar:
 
         temp = df.groupby('sentiment').count()['text'].reset_index().sort_values(by='text',ascending=False)
 
-        plt.figure(figsize=(8, 8))
-        sns.countplot(x='sentiment',data=df)
+        # plt.figure(figsize=(8, 8))
+        # sns.countplot(x='sentiment',data=df)
         #27
-        plt.savefig(os.path.join(self.bar_dir, "27sentiment.png"))
+        # plt.savefig(os.path.join(self.bar_dir, "27sentiment.png"))
 
-        plt.figure(figsize=(8, 8))
-        sns.barplot(x="user_verified", y="favorites", hue="sentiment", data=df)
-        #29
-        plt.savefig(os.path.join(self.bar_dir, "29verified_favorites.png"))
+        # plt.figure(figsize=(8, 8))
+        # sns.barplot(x="user_verified", y="favorites", hue="sentiment", data=df)
+        # #29
+        # plt.savefig(os.path.join(self.bar_dir, "29verified_favorites.png"))
 
-        plt.figure(figsize=(8, 8))
-        sns.barplot(x="user_verified", y="retweets", hue="sentiment", data=df)
-        #30
-        plt.savefig(os.path.join(self.bar_dir, "30verified_retweet.png"))
+        # plt.figure(figsize=(8, 8))
+        # sns.barplot(x="user_verified", y="retweets", hue="sentiment", data=df)
+        # #30
+        # plt.savefig(os.path.join(self.bar_dir, "30verified_retweet.png"))
 
         # Positive_tweet = df[df['sentiment']=='Positive'].reset_index()
         # Negative_tweet = df[df['sentiment']=='Negative'].reset_index()
@@ -304,32 +304,32 @@ class Bar:
         # data_verified=df[(df['user_verified']==True)].reset_index()
         # data_not_verified=df[(df['user_verified']==False)].reset_index()
 
-        plt.figure(figsize=(8, 8))
-        sns.barplot(x="user_followers", y="user_name", orient="h", palette=["b"],
-                data=df[(df.sentiment== "Positive")]\
-                .drop_duplicates(subset=["user_name"])\
-                .sort_values(by=["user_followers"], ascending=False)[["user_name", "user_followers"]][:10])
-        plt.title('Top 10 Accounts with Highest Followers who tweet Positive')
-        #31
-        plt.savefig(os.path.join(self.bar_dir, "31top positive.png"))
+        # plt.figure(figsize=(8, 8))
+        # sns.barplot(x="user_followers", y="user_name", orient="h", palette=["b"],
+        #         data=df[(df.sentiment== "Positive")]\
+        #         .drop_duplicates(subset=["user_name"])\
+        #         .sort_values(by=["user_followers"], ascending=False)[["user_name", "user_followers"]][:10])
+        # plt.title('Top 10 Accounts with Highest Followers who tweet Positive')
+        # #31
+        # plt.savefig(os.path.join(self.bar_dir, "31top positive.png"))
 
-        plt.figure(figsize=(8, 8))
-        sns.barplot(x="user_followers", y="user_name", orient="h", palette=["g"],
-                data=df[(df.sentiment == "Neutral")]
-                .drop_duplicates(subset=["user_name"])\
-                .sort_values(by=["user_followers"], ascending=False)[["user_name", "user_followers"]][:10])
-        #32
-        plt.title('Top 10 Accounts with Highest Followers who tweet Neutral')
-        plt.savefig(os.path.join(self.bar_dir, "32top neutral.png"))
+        # plt.figure(figsize=(8, 8))
+        # sns.barplot(x="user_followers", y="user_name", orient="h", palette=["g"],
+        #         data=df[(df.sentiment == "Neutral")]
+        #         .drop_duplicates(subset=["user_name"])\
+        #         .sort_values(by=["user_followers"], ascending=False)[["user_name", "user_followers"]][:10])
+        # #32
+        # plt.title('Top 10 Accounts with Highest Followers who tweet Neutral')
+        # plt.savefig(os.path.join(self.bar_dir, "32top neutral.png"))
 
-        plt.figure(figsize=(8, 8))
-        sns.barplot(x="user_followers", y="user_name", orient="h", palette=["r"],
-                data=df[(df.sentiment == "Negative")]
-                .drop_duplicates(subset=["user_name"])\
-                .sort_values(by=["user_followers"], ascending=False)[["user_name", "user_followers"]][:10])
-        plt.title('Top 10 Accounts with Highest Followers who tweet Negative')
-        #33
-        plt.savefig(os.path.join(self.bar_dir, "33top negative.png"))
+        # plt.figure(figsize=(8, 8))
+        # sns.barplot(x="user_followers", y="user_name", orient="h", palette=["r"],
+        #         data=df[(df.sentiment == "Negative")]
+        #         .drop_duplicates(subset=["user_name"])\
+        #         .sort_values(by=["user_followers"], ascending=False)[["user_name", "user_followers"]][:10])
+        # plt.title('Top 10 Accounts with Highest Followers who tweet Negative')
+        # #33
+        # plt.savefig(os.path.join(self.bar_dir, "33top negative.png"))
 
 class Pie:
     def __init__(self):
@@ -338,8 +338,8 @@ class Pie:
 
     def plot_pie(self, data, title):
         plt.figure(figsize=(8,8))
-        data.plot(kind = 'pie', title = title)
-        plt.savefig(os.path.join(self.pie_dir, title + ".png"))
+        # data.plot(kind = 'pie', title = title)
+        # plt.savefig(os.path.join(self.pie_dir, title + ".png"))
         return
 
     def verified_pie(self):
@@ -386,9 +386,9 @@ class Pie:
         labels = 'positive', 'neutral', 'negative'
         sizes = [positive, neutral, negative]
 
-        plt.figure(figsize=(8,8))
-        plt.pie(x=sizes, labels=labels)
-        plt.savefig(os.path.join(self.pie_dir, "sentimental.png"))
+        # plt.figure(figsize=(8,8))
+        # plt.pie(x=sizes, labels=labels)
+        # plt.savefig(os.path.join(self.pie_dir, "sentimental.png"))
 
 class Wordcloud:
     def __init__(self):
@@ -404,8 +404,8 @@ class Wordcloud:
         fig = plt.figure(1, figsize=(8,8))
         plt.axis('off')
         fig.suptitle(title)
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.savefig(os.path.join(self.word_dir, title + ".png"))
+        # plt.imshow(wordcloud, interpolation='bilinear')
+        # plt.savefig(os.path.join(self.word_dir, title + ".png"))
 
     def text_wordcloud(self, df, col_name):
         data = df[col_name]
