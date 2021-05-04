@@ -208,15 +208,8 @@
                                     <thead>
                                         <tr>
                                             <th>text</th>                                            
-                                            <th>user_name</th>
-                                            <th>user_location</th>
-                                            <th>user_followers</th>
-                                            <th>user_verified</th>
-                                            <th>hashtags</th>
-                                            <th>source</th>
-                                            <th>retweets</th>
-                                            <th>favorites</th>
-                                            <th>is_retweet</th>
+                                            <th>polarity</th>
+                                            <th>subjectivity</th>
                                         </tr>
                                     </thead>
 
@@ -225,15 +218,8 @@
                                         {% for i in d %}
                                           <tr>
                                             <td>{{i.text}}</td>                                              
-                                            <td>{{i.user_name}}</td>
-                                            <td>{{i.user_location}}</td>
-                                            <td>{{i.user_followers}}</td>
-                                            <td>{{i.user_verified}}</td>
-                                            <td>{{i.hashtags}}</td>
-                                            <td>{{i.source}}</td>
-                                            <td>{{i.retweets}}</td>
-                                            <td>{{i.favorites}}</td>
-                                            <td>{{i.favorites}}</td>
+                                            <td>{{i.polarity}}</td>
+                                            <td>{{i.subjectivity}}</td>
                                           </tr>
                                         {% endfor %}
                                         {% endif %}

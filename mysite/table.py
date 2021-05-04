@@ -33,15 +33,13 @@ class Table:
 
         return ( polarity, subjectivity)
 
-    def top_retweet_favorites(self, k, engagement_type):
-        df = pd.read_csv("data/vaccination_tweets.csv")
+    """Already done by table functions"""
+    # def top_retweet_favorites(self, k, engagement_type):
+    #     df = pd.read_csv("data/vaccination_tweets.csv")
 
-        if engagement_type == "retweets":
-            df = df.sort_values(by='retweets', ascending=False)[['text', 'date', 'user_name', 'user_location', 'hashtags', 'favorites', 'retweets']].head(n=k)
-        elif engagement_type == "favorites":            
-            df = df.sort_values(by='favorites', ascending=False)[['text', 'date', 'user_name', 'user_location', 'hashtags', 'favorites', 'retweets']].head(n=k)
-
-        return df
+    #     df = df.sort_values(by=engagement_type, ascending=False)[['user_name', 'user_location', 'user_followers', 'user_verified',
+    #                             'text', 'hashtags', 'source', 'retweets', 'favorites', 'is_retweet']]
+    #     return df.head(n=k)
 
     def top_polarity(self, sentiment_type, k):
         df = pd.read_csv("data/vaccination_tweets.csv")
@@ -50,12 +48,12 @@ class Table:
 
         if sentiment_type == "negative":
             # inspect the most negatively charged tweets
-            df = df.sort_values(by='polarity', ascending=True)[['text', 'polarity', 'subjectivity']].reset_index(drop=True).head(n=k)
+            df = df.sort_values(by='polarity', ascending=True)[['text', 'polarity', 'subjectivity']].reset_index(drop=True)
         elif sentiment_type == "positive":
             # inspect the most positively charged tweets
-            df = df.sort_values(by='polarity', ascending=False)[['text', 'polarity', 'subjectivity']].reset_index(drop=True).head(n=k)
+            df = df.sort_values(by='polarity', ascending=False)[['text', 'polarity', 'subjectivity']].reset_index(drop=True)
 
-        return df
+        return df.head(n=k)
 
     def top_subjectivity(self, subjectivity_type, k):    
         df = pd.read_csv("data/vaccination_tweets.csv")
@@ -64,9 +62,9 @@ class Table:
 
         if subjectivity_type == "objective":
             # inspect the most objective tweets            
-            df = df.sort_values(by='subjectivity', ascending=True)[['text', 'polarity', 'subjectivity']].reset_index(drop=True).head(n=k)
+            df = df.sort_values(by='subjectivity', ascending=True)[['text', 'polarity', 'subjectivity']].reset_index(drop=True)
         if subjectivity_type == "subjective":
             # inspect the most subjective tweets (NOTE: subjectivity scale ranges from 0 to 1)
-            df = df.sort_values(by='subjectivity', ascending=False)[['text', 'polarity', 'subjectivity']].reset_index(drop=True).head(n=k)
+            df = df.sort_values(by='subjectivity', ascending=False)[['text', 'polarity', 'subjectivity']].reset_index(drop=True)
 
-        return df
+        return df.head(n=k)

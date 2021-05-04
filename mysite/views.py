@@ -175,26 +175,31 @@ def account_chart(request):
     return render(request, 'account-charts.html', all_data)   
 
 def tables(request):
+    tab = table.Table()
+    data = []
 
     if request.GET:
         search = request.GET['search']
-        tab = table.Table()
         results = tab.search(search)
-        json_records = results.reset_index().to_json(orient ='records')
-        data = []
-        data = json.loads(json_records)
-        context = {'d':data}    
-        # print(results.head())
-        # table_html = results.to_html()
-        # print(results.to_html())
+        json_records = results.reset_index().to_json(orient ='records') 
     else:
-        tab = table.Table()
         results = tab.search("")
         json_records = results.reset_index().to_json(orient ='records')
-        data = []
-        data = json.loads(json_records)
-        context = {'d':data}    
-        # print(results.head())
-        # table_html = results.to_html()        
+
+    data = json.loads(json_records)
+    context = {'d':data}    
     
     return render(request, 'tables.html', context)
+
+def sentimental_analysis(request):
+    tab = table.Table()
+    data = []
+
+    results = tab.top_polarity("negative", 10)  
+    json_records = results.reset_index().to_json(orient ='records')     
+
+    data = json.loads(json_records)
+    context = {'d':data}      
+     
+    
+    return render(request, 'sentimental_analysis.html', context)    

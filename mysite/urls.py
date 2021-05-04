@@ -32,6 +32,7 @@ urlpatterns = [
     path('account-charts/', views.account_chart,name="account-charts"),
     path('source-charts/', views.source_chart,name="source-charts"),
     path('sentiment-charts/', views.sentiment_chart,name="sentiment-charts"),    
+    path('sentimental-analysis/', views.sentimental_analysis,name="sentimental-analysis"),        
     path('charts/', views.tweet_chart,name="charts"),
     path('tables/', views.tables,name="tables"),
     path('admin/', admin.site.urls),
