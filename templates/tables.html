@@ -77,14 +77,25 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
+            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'charts' %}">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts"
+                    aria-expanded="true" aria-controls="collapseCharts">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Twitter Charts</span>
+                </a>
+                <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{% url 'tweet-charts' %}">Tweets</a>
+                        <a class="collapse-item" href="{% url 'hashtags-charts' %}">Hashtags</a>
+                        <a class="collapse-item" href="{% url 'engagement-charts' %}">Engagement</a>
+                        <a class="collapse-item" href="{% url 'account-charts' %}">Account</a>
+                        <a class="collapse-item" href="{% url 'source-charts' %}">Sources</a>
+                        <a class="collapse-item" href="{% url 'sentiment-charts' %}">Sentimental Analysis</a>
+                    </div>
+                </div>
             </li>
-
-            <!-- Nav Item - Tables -->
+                        <!-- Nav Item - Tables -->
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'tables' %}">
                     <i class="fas fa-fw fa-table"></i>
