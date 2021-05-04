@@ -130,18 +130,17 @@ def engagement_chart(request):
     return render(request, 'engagement-charts.html', all_data)
 
 def sentiment_chart(request):
-    bar = visualization.Bar()
-    line = visualization.Line() 
     pie = visualization.Pie()
+    sentiment = visualization.Sentiment()
 
     pie_labels, pie_data = pie.sentiment_pie()
-    bar_labels, bar_data = bar.accounts_sentiment("positive", 10)
-    bar2_labels, bar2_data = bar.accounts_sentiment("neutral", 10)
-    bar3_labels, bar3_data = bar.accounts_sentiment("negative",10)
-    bar4_labels, bar4_data = bar.sentiment_bar()
-    line_labels, line_data = line.sentiment_date("positive")
-    line2_labels, line2_data = line.sentiment_date("neutral")
-    line3_labels, line3_data = line.sentiment_date("negative")
+    bar_labels, bar_data = sentiment.accounts_sentiment("positive", 10)
+    bar2_labels, bar2_data = sentiment.accounts_sentiment("neutral", 10)
+    bar3_labels, bar3_data = sentiment.accounts_sentiment("negative",10)
+    bar4_labels, bar4_data = sentiment.sentiment_bar()
+    line_labels, line_data = sentiment.sentiment_date("positive")
+    line2_labels, line2_data = sentiment.sentiment_date("neutral")
+    line3_labels, line3_data = sentiment.sentiment_date("negative")
 
     all_data = {"pie_labels":pie_labels, "pie_data":pie_data, 
                     "bar_labels": bar_labels, "bar_data":bar_data, "bar2_labels": bar2_labels, "bar2_data":bar2_data, 
@@ -203,14 +202,30 @@ def tables(request):
 
 def sentimental_analysis(request):
     tab = table.Table()
-    data = []
 
-    results = tab.top_polarity("negative", 10)  
-    json_records = results.reset_index().to_json(orient ='records')     
+    if request.GET:
+        input_sent = request.GET
+        polarity, subjectivity = tab.input_sentimental(input_sent)
+        print(polarity, subjectivity)
+    else:
+        results = tab.top_polarity("positive", 10)  
+        json_records = results.reset_index().to_json(orient ='records')
+        pos_data = json.loads(json_records)
 
-    data = json.loads(json_records)
-    context = {'d':data}      
+        results = tab.top_polarity("negative", 10)  
+        json_records = results.reset_index().to_json(orient ='records')   
+        neg_data = json.loads(json_records)
+
+        results = tab.top_subjectivity("objective", 10)  
+        json_records = results.reset_index().to_json(orient ='records')   
+        sub_data = json.loads(json_records)
+
+        results = tab.top_subjectivity("subjective", 10)  
+        json_records = results.reset_index().to_json(orient ='records')   
+        obj_data = json.loads(json_records)        
+
+    context = {'pos_data':pos_data,'neg_data':neg_data,
+                    'sub_data':sub_data, 'obj_data': obj_data}      
      
     
-    return render(request, 'sentimental_analysis.html', context)
-
+    return render(request, 'sentimental-analysis.html', context)    

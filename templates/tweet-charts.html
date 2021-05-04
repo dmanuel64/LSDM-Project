@@ -220,7 +220,7 @@
                             <!-- Area Chart -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Number weets</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Monthly Number of Tweets</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="chart-area">
@@ -611,7 +611,7 @@
             datasets: [{
                 // label: {{ chart_title|safe }},
                 label: "tweets",
-                backgroundColor: "#4e73df",
+                backgroundColor: ['#4e73df', '#1cc88a', '#36b4cc', '#6a77df', '#5bc88a', '#85b3cc', '#1cc88a'],
                 hoverBackgroundColor: "#2e59d9",
                 borderColor: "#4e73df",
                 data: {{ bar2_data|safe }},

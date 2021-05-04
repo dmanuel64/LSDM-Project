@@ -188,7 +188,6 @@ class Bar:
 
         return list(df_sort[:k]['hashtags'].values), list(df_sort[:k][engagement_type].values)  
 
-    # 
     def top_location(self, k):
         """[Get top locations]
 
@@ -234,79 +233,6 @@ class Bar:
             day_month = df.groupby('date', sort=False, as_index=False).agg({'favorites':'sum'})            
 
         return list(day_month['date'].values), list(day_month[engagement_type].values)   
-
-    def sentiment_bar(self):
-        """[Get total sentimental analysis]
-
-        Returns:
-            [string]: [sentiment labels]
-            [integers]: [values]
-        """
-
-        df = pd.read_csv("data/vaccination_tweets.csv")
-        analyser = SentimentIntensityAnalyzer()
-
-        scores=[]
-
-        for i in range(len(df['text'])):
-            score = analyser.polarity_scores(df['text'][i])
-            score=score['compound']
-            scores.append(score)
-
-        sentiment=[]
-
-        for i in scores:
-            if i>=0.05: sentiment.append('Positive')
-            elif i<=(-0.05): sentiment.append('Negative')
-            else:sentiment.append('Neutral')
-                
-        df['sentiment']=pd.Series(np.array(sentiment))
-        temp = df.groupby('sentiment').count()['text'].reset_index().sort_values(by='text',ascending=False)
-
-        return list(temp['sentiment'].values), list(temp['text'].values)
-
-    def accounts_sentiment(self, sentiment_type, k):
-        """[Get top accounts with most positive, neutral, or negative]
-
-        Args:
-            sentiment_type ([string]): ["positive", "neutral", "negative"]
-            k ([integer]): [description]
-
-        Returns:
-            [string]: [user_name labels]
-            [integers]: [values]
-        """        
-
-        df = pd.read_csv("data/vaccination_tweets.csv")
-        analyser = SentimentIntensityAnalyzer()
-
-        scores=[]
-
-        for i in range(len(df['text'])):
-            score = analyser.polarity_scores(df['text'][i])
-            score=score['compound']
-            scores.append(score)
-
-        sentiment=[]
-
-        for i in scores:
-            if i>=0.05: sentiment.append('Positive')
-            elif i<=(-0.05): sentiment.append('Negative')
-            else:sentiment.append('Neutral')
-                
-        df['sentiment']=pd.Series(np.array(sentiment))
-
-        if sentiment_type=="positive":      
-            data=df[(df.sentiment== "Positive")].drop_duplicates(subset=["user_name"])\
-                .sort_values(by=["user_followers"], ascending=False)[["user_name", "user_followers"]][:k]
-        elif sentiment_type=="neutral":          
-            data=df[(df.sentiment== "Neutral")].drop_duplicates(subset=["user_name"])\
-                .sort_values(by=["user_followers"], ascending=False)[["user_name", "user_followers"]][:k]
-        elif sentiment_type=="negative":          
-            data=df[(df.sentiment== "Negative")].drop_duplicates(subset=["user_name"])\
-                .sort_values(by=["user_followers"], ascending=False)[["user_name", "user_followers"]][:k]                                
-
-        return list(data['user_name'].values), list(data['user_followers'].values)     
 
 class Pie:
     def verified_pie(self):
@@ -441,6 +367,25 @@ class Line:
 
         return list(day_month['date'].values), list(day_month['total_engagement'].values)
 
+class Sentiment:
+    def __init__(self) -> None:
+        self.df = pd.read_csv("data/vaccination_tweets.csv")
+        analyser = SentimentIntensityAnalyzer()
+        scores=[]
+        sentiment=[]
+
+        for i in range(len(self.df['text'])):
+            score = analyser.polarity_scores(self.df['text'][i])
+            score=score['compound']
+            scores.append(score)
+
+        for i in scores:
+            if i>=0.05: sentiment.append('Positive')
+            elif i<=(-0.05): sentiment.append('Negative')
+            else: sentiment.append('Neutral')
+
+        self.df['sentiment']=pd.Series(np.array(sentiment))
+
     def sentiment_date(self, sentiment_type):
         """[Get daily sentimental analysis positive, neutral, negative]
 
@@ -451,27 +396,9 @@ class Line:
             [strings]: [dates]
             [integers]: [values]     
         """        
-        analyser = SentimentIntensityAnalyzer()
+        self.df["date"] = pd.to_datetime(self.df.date) 
 
-        df=pd.read_csv('data/vaccination_tweets.csv')
-
-        scores=[]
-        sentiment=[]
-
-        for i in range(len(df['text'])):
-            score = analyser.polarity_scores(df['text'][i])
-            score=score['compound']
-            scores.append(score)
-
-        for i in scores:
-            if i>=0.05: sentiment.append('Positive')
-            elif i<=(-0.05): sentiment.append('Negative')
-            else: sentiment.append('Neutral')
-
-        df['sentiment']=pd.Series(np.array(sentiment))
-        df["date"] = pd.to_datetime(df.date) 
-
-        timeline = df.resample('D', on='date')["sentiment"].value_counts().unstack(1)
+        timeline = self.df.resample('D', on='date')["sentiment"].value_counts().unstack(1)
         timeline.reset_index(inplace=True)
         timeline = timeline.melt("date", var_name='sentiment',  value_name='vals')
         timeline['date'] = timeline['date'].dt.strftime('%d/%m')   
@@ -485,4 +412,38 @@ class Line:
 
         return list(data['date'].values), list(data['vals'].values)
 
+    def sentiment_bar(self):
+        """[Get total sentimental analysis]
 
+        Returns:
+            [string]: [sentiment labels]
+            [integers]: [values]
+        """
+
+        temp = self.df.groupby('sentiment').count()['text'].reset_index().sort_values(by='text',ascending=False)
+
+        return list(temp['sentiment'].values), list(temp['text'].values)
+
+    def accounts_sentiment(self, sentiment_type, k):
+        """[Get top accounts with most positive, neutral, or negative]
+
+        Args:
+            sentiment_type ([string]): ["positive", "neutral", "negative"]
+            k ([integer]): [description]
+
+        Returns:
+            [string]: [user_name labels]
+            [integers]: [values]
+        """        
+
+        if sentiment_type=="positive":      
+            data=self.df[(self.df.sentiment== "Positive")].drop_duplicates(subset=["user_name"])\
+                .sort_values(by=["user_followers"], ascending=False)[["user_name", "user_followers"]][:k]
+        elif sentiment_type=="neutral":          
+            data=self.df[(self.df.sentiment== "Neutral")].drop_duplicates(subset=["user_name"])\
+                .sort_values(by=["user_followers"], ascending=False)[["user_name", "user_followers"]][:k]
+        elif sentiment_type=="negative":          
+            data=self.df[(self.df.sentiment== "Negative")].drop_duplicates(subset=["user_name"])\
+                .sort_values(by=["user_followers"], ascending=False)[["user_name", "user_followers"]][:k]                                
+
+        return list(data['user_name'].values), list(data['user_followers'].values)     
