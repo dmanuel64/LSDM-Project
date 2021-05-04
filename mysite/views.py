@@ -195,11 +195,24 @@ def sentimental_analysis(request):
     tab = table.Table()
     data = []
 
-    results = tab.top_polarity("negative", 10)  
-    json_records = results.reset_index().to_json(orient ='records')     
+    results = tab.top_polarity("positive", 10)  
+    json_records = results.reset_index().to_json(orient ='records')
+    pos_data = json.loads(json_records)
 
-    data = json.loads(json_records)
-    context = {'d':data}      
+    results = tab.top_polarity("negative", 10)  
+    json_records = results.reset_index().to_json(orient ='records')   
+    neg_data = json.loads(json_records)
+
+    results = tab.top_subjectivity("objective", 10)  
+    json_records = results.reset_index().to_json(orient ='records')   
+    sub_data = json.loads(json_records)
+
+    results = tab.top_subjectivity("subjective", 10)  
+    json_records = results.reset_index().to_json(orient ='records')   
+    obj_data = json.loads(json_records)        
+
+    context = {'pos_data':pos_data,'neg_data':neg_data,
+                    'sub_data':sub_data, 'obj_data': obj_data}      
      
     
     return render(request, 'sentimental_analysis.html', context)    

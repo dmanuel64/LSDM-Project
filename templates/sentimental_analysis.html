@@ -197,38 +197,146 @@
                         i.e. "user_location: canada". If no column is specified, it will automatically return tweets with that keyword.</p>
 
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                        </div>
-                        <div class="card-body">
-                            <!-- {{ context|safe }} -->
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>text</th>                                            
-                                            <th>polarity</th>
-                                            <th>subjectivity</th>
-                                        </tr>
-                                    </thead>
+                    <div class="row">
+                    <!-- DataTales Example -->
+                        <div class="col-xl-6 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Top Positive Tweets</h6>
+                                </div>
+                                <div class="card-body">
+                                    <!-- {{ context|safe }} -->
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>text</th>                                            
+                                                    <th>polarity</th>
+                                                    <th>subjectivity</th>
+                                                </tr>
+                                            </thead>
 
-                                    <tbody>
-                                        {% if d %}  
-                                        {% for i in d %}
-                                          <tr>
-                                            <td>{{i.text}}</td>                                              
-                                            <td>{{i.polarity}}</td>
-                                            <td>{{i.subjectivity}}</td>
-                                          </tr>
-                                        {% endfor %}
-                                        {% endif %}
-                                    </tbody>
-                                </table>
+                                            <tbody>
+                                                {% if pos_data %}  
+                                                {% for i in pos_data %}
+                                                    <tr>
+                                                    <td>{{i.text}}</td>                                              
+                                                    <td>{{i.polarity}}</td>
+                                                    <td>{{i.subjectivity}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- DataTales Example -->
+                        <div class="col-xl-6 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Top Negative Tweets</h6>
+                                </div>
+                                <div class="card-body">
+                                    <!-- {{ context|safe }} -->
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>text</th>                                            
+                                                    <th>polarity</th>
+                                                    <th>subjectivity</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {% if neg_data %}  
+                                                {% for i in neg_data %}
+                                                    <tr>
+                                                    <td>{{i.text}}</td>                                              
+                                                    <td>{{i.polarity}}</td>
+                                                    <td>{{i.subjectivity}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- DataTales Example -->
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Top Subjective Tweets</h6>
+                                </div>
+                                <div class="card-body">
+                                    <!-- {{ context|safe }} -->
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>text</th>                                            
+                                                    <th>polarity</th>
+                                                    <th>subjectivity</th>
+                                                </tr>
+                                            </thead>
 
+                                            <tbody>
+                                                {% if sub_data %}  
+                                                {% for i in sub_data %}
+                                                <tr>
+                                                    <td>{{i.text}}</td>                                              
+                                                    <td>{{i.polarity}}</td>
+                                                    <td>{{i.subjectivity}}</td>
+                                                </tr>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- DataTales Example -->
+                        <div class="col-xl-6 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Top Objective Tweets</h6>
+                                </div>
+                                <div class="card-body">
+                                    <!-- {{ context|safe }} -->
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>text</th>                                            
+                                                    <th>polarity</th>
+                                                    <th>subjectivity</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {% if obj_data %}  
+                                                {% for i in obj_data %}
+                                                    <tr>
+                                                    <td>{{i.text}}</td>                                              
+                                                    <td>{{i.polarity}}</td>
+                                                    <td>{{i.subjectivity}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
                 </div>
                 <!-- /.container-fluid -->
 
