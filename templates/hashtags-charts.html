@@ -274,13 +274,20 @@
                                     <code>/js/demo/chart-pie-demo.js</code> file. -->
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
+                                            <i class="fas fa-circle text-primary"></i> {{pie_labels.0}}
+                                        </span>     
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-success"></i> {{pie_labels.1}}
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
+                                            <i class="fas fa-circle text-info"></i> {{pie_labels.2}}
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral                                    
+                                            <i class="fas fa-circle text-success"></i> {{pie_labels.3}}
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-info"></i> {{pie_labels.4}}
+                                        </span>
                                 </div>
                             </div>
                         </div>
@@ -424,7 +431,7 @@
             labels: {{ bar_labels|safe }},
                 datasets: [{
                 label: "Bar",
-                backgroundColor: "#4e73df",
+                backgroundColor: ['#4e73df', '#1cc88a', '#36b4cc', '#6a77df', '#5bc88a', '#85b3cc'],
                 hoverBackgroundColor: "#2e59d9",
                 borderColor: "#4e73df",
                 data: {{ bar_data|safe }},
@@ -543,7 +550,7 @@
          labels: {{ bar2_labels|safe }},
              datasets: [{
              label: "Bar",
-             backgroundColor: "#4e73df",
+             backgroundColor: ['#4e73df', '#1cc88a', '#36b4cc', '#6a77df', '#5bc88a', '#85b3cc'],
              hoverBackgroundColor: "#2e59d9",
              borderColor: "#4e73df",
              data: {{ bar2_data|safe }},
@@ -664,7 +671,7 @@
          labels: {{ bar3_labels|safe }},
              datasets: [{
              label: "Bar",
-             backgroundColor: "#4e73df",
+             backgroundColor: ['#4e73df', '#1cc88a', '#36b4cc', '#6a77df', '#5bc88a', '#85b3cc'],
              hoverBackgroundColor: "#2e59d9",
              borderColor: "#4e73df",
              data: {{ bar3_data|safe }},

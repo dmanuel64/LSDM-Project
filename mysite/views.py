@@ -179,7 +179,7 @@ def tables(request):
     data = []
 
     if request.GET:
-        search = request.GET['search']
+        search = request.GET
         results = tab.search(search)
         json_records = results.reset_index().to_json(orient ='records') 
     else:
@@ -193,26 +193,30 @@ def tables(request):
 
 def sentimental_analysis(request):
     tab = table.Table()
-    data = []
 
-    results = tab.top_polarity("positive", 10)  
-    json_records = results.reset_index().to_json(orient ='records')
-    pos_data = json.loads(json_records)
+    if request.GET:
+        input_sent = request.GET
+        polarity, subjectivity = tab.input_sentimental(input_sent)
+        print(polarity, subjectivity)
+    else:
+        results = tab.top_polarity("positive", 10)  
+        json_records = results.reset_index().to_json(orient ='records')
+        pos_data = json.loads(json_records)
 
-    results = tab.top_polarity("negative", 10)  
-    json_records = results.reset_index().to_json(orient ='records')   
-    neg_data = json.loads(json_records)
+        results = tab.top_polarity("negative", 10)  
+        json_records = results.reset_index().to_json(orient ='records')   
+        neg_data = json.loads(json_records)
 
-    results = tab.top_subjectivity("objective", 10)  
-    json_records = results.reset_index().to_json(orient ='records')   
-    sub_data = json.loads(json_records)
+        results = tab.top_subjectivity("objective", 10)  
+        json_records = results.reset_index().to_json(orient ='records')   
+        sub_data = json.loads(json_records)
 
-    results = tab.top_subjectivity("subjective", 10)  
-    json_records = results.reset_index().to_json(orient ='records')   
-    obj_data = json.loads(json_records)        
+        results = tab.top_subjectivity("subjective", 10)  
+        json_records = results.reset_index().to_json(orient ='records')   
+        obj_data = json.loads(json_records)        
 
     context = {'pos_data':pos_data,'neg_data':neg_data,
                     'sub_data':sub_data, 'obj_data': obj_data}      
      
     
-    return render(request, 'sentimental_analysis.html', context)    
+    return render(request, 'sentimental-analysis.html', context)    
