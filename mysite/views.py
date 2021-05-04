@@ -123,18 +123,17 @@ def engagement_chart(request):
     return render(request, 'engagement-charts.html', all_data)
 
 def sentiment_chart(request):
-    bar = visualization.Bar()
-    line = visualization.Line() 
     pie = visualization.Pie()
+    sentiment = visualization.Sentiment()
 
     pie_labels, pie_data = pie.sentiment_pie()
-    bar_labels, bar_data = bar.accounts_sentiment("positive", 10)
-    bar2_labels, bar2_data = bar.accounts_sentiment("neutral", 10)
-    bar3_labels, bar3_data = bar.accounts_sentiment("negative",10)
-    bar4_labels, bar4_data = bar.sentiment_bar()
-    line_labels, line_data = line.sentiment_date("positive")
-    line2_labels, line2_data = line.sentiment_date("neutral")
-    line3_labels, line3_data = line.sentiment_date("negative")
+    bar_labels, bar_data = sentiment.accounts_sentiment("positive", 10)
+    bar2_labels, bar2_data = sentiment.accounts_sentiment("neutral", 10)
+    bar3_labels, bar3_data = sentiment.accounts_sentiment("negative",10)
+    bar4_labels, bar4_data = sentiment.sentiment_bar()
+    line_labels, line_data = sentiment.sentiment_date("positive")
+    line2_labels, line2_data = sentiment.sentiment_date("neutral")
+    line3_labels, line3_data = sentiment.sentiment_date("negative")
 
     all_data = {"pie_labels":pie_labels, "pie_data":pie_data, 
                     "bar_labels": bar_labels, "bar_data":bar_data, "bar2_labels": bar2_labels, "bar2_data":bar2_data, 

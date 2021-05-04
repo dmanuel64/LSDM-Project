@@ -6,6 +6,11 @@ from textblob import TextBlob
 
 class Table:
 
+    def __init__(self) -> None:
+        self.df = pd.read_csv("data/vaccination_tweets.csv")
+        self.df['polarity'] = self.df['text'].apply(lambda x: TextBlob(x).sentiment.polarity)
+        self.df['subjectivity'] = self.df['text'].apply(lambda x: TextBlob(x).sentiment.subjectivity)
+
     def search(self, query):
         """[Search for keywords in a given field]
 
@@ -19,6 +24,9 @@ class Table:
         df.drop(columns=['id'], inplace=True)
         df.dropna()
 
+        df = df[['user_name', 'user_location', 'user_followers', 'user_verified',
+                        'text', 'hashtags', 'source', 'retweets', 'favorites', 'is_retweet']]
+
         if ':' in query: 
             print("ere")
             type, keywords = query.split(":")
@@ -30,8 +38,6 @@ class Table:
 
         keywords = keywords.strip()
         results = df[df[type].str.contains("(?i)"+keywords) == True]
-        results = results[['user_name', 'user_location', 'user_followers', 'user_verified',
-                                'text', 'hashtags', 'source', 'retweets', 'favorites', 'is_retweet']]
 
         return results
 
@@ -59,18 +65,14 @@ class Table:
         Returns:
             [dataframe]: [table with type k tweets of specified sentiment]
         """        
-        df = pd.read_csv("data/vaccination_tweets.csv")
-        df['polarity'] = df['text'].apply(lambda x: TextBlob(x).sentiment.polarity)
-        df['subjectivity'] = df['text'].apply(lambda x: TextBlob(x).sentiment.subjectivity)
-
         if sentiment_type == "negative":
             # inspect the most negatively charged tweets
-            df = df.sort_values(by='polarity', ascending=True)[['text', 'polarity', 'subjectivity']].reset_index(drop=True)
+            data = self.df.sort_values(by='polarity', ascending=True)[['text', 'polarity', 'subjectivity']].reset_index(drop=True)
         elif sentiment_type == "positive":
             # inspect the most positively charged tweets
-            df = df.sort_values(by='polarity', ascending=False)[['text', 'polarity', 'subjectivity']].reset_index(drop=True)
+            data = self.df.sort_values(by='polarity', ascending=False)[['text', 'polarity', 'subjectivity']].reset_index(drop=True)
 
-        return df.head(n=k)
+        return data.head(n=k)
 
     def top_subjectivity(self, subjectivity_type, k):    
         """[Get the most subjective or objective tweets]
@@ -82,15 +84,11 @@ class Table:
         Returns:
             [dataframe]: [table with type k tweets of specified subectivity]
         """        
-        df = pd.read_csv("data/vaccination_tweets.csv")
-        df['polarity'] = df['text'].apply(lambda x: TextBlob(x).sentiment.polarity)
-        df['subjectivity'] = df['text'].apply(lambda x: TextBlob(x).sentiment.subjectivity)
-
         if subjectivity_type == "objective":
             # inspect the most objective tweets            
-            df = df.sort_values(by='subjectivity', ascending=True)[['text', 'polarity', 'subjectivity']].reset_index(drop=True)
+            data = self.df.sort_values(by='subjectivity', ascending=True)[['text', 'polarity', 'subjectivity']].reset_index(drop=True)
         if subjectivity_type == "subjective":
             # inspect the most subjective tweets (NOTE: subjectivity scale ranges from 0 to 1)
-            df = df.sort_values(by='subjectivity', ascending=False)[['text', 'polarity', 'subjectivity']].reset_index(drop=True)
+            data = self.df.sort_values(by='subjectivity', ascending=False)[['text', 'polarity', 'subjectivity']].reset_index(drop=True)
 
-        return df.head(n=k)
+        return data.head(n=k)
