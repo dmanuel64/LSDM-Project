@@ -6,17 +6,24 @@ from textblob import TextBlob
 
 class Table:
 
-    def search(self, query):
+    def search(self, query):        
         df = pd.read_csv("data/vaccination_tweets.csv")
-
         df.drop(columns=['id'], inplace=True)
         df.dropna()
-        type = query.split(":")[0]
 
-        keywords = query.split(":")[1]
+        if ':' in query: 
+            print("ere")
+            type, keywords = query.split(":")
+            if type not in list(df):
+                type = "text"
+        else: 
+            type = "text"
+            keywords = query
+
         keywords = keywords.strip()
-
         results = df[df[type].str.contains("(?i)"+keywords) == True]
+        results = results[['user_name', 'user_location', 'user_followers', 'user_verified',
+                                'text', 'hashtags', 'source', 'retweets', 'favorites', 'is_retweet']]
 
         return results
 
