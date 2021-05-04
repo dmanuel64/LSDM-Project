@@ -8,6 +8,7 @@ pandas~=1.2.4
 pytrends~=4.7.3
 setuptools~=49.2.1
 tweepy~=3.10.0
+seaborn
 textblob
 wordcloud
 plotly
@@ -15,3 +16,5 @@ pyspellchecker
 wordninja
 vaderSentiment
 kaleido
+notebook
+ipywidgets

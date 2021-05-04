@@ -9,8 +9,8 @@ from mysite.models import Post
 from pythonScripts import twitterCollection
 from pythonScripts import googletrends
 import simplejson as json
-from mysite import visualization
-from mysite import table
+from mysite import visualization, table
+from .models import UserHistory
 
 import logging
 logger = logging.getLogger(__name__)
@@ -81,6 +81,13 @@ def login_page(request):
 def forgot(request):
     return render(request, 'forgot-password.html')
 
+def user_profile(request):
+    if request.user.is_authenticated:
+        history = UserHistory.objects.filter(related_user=request.user)
+        context = {'user': request.user, 'history': history}
+        return render(request, 'profile.html', context)
+    else:
+        return redirect('/')
 
 def tweet_chart(request):
     bar = visualization.Bar()
@@ -177,9 +184,12 @@ def account_chart(request):
 def tables(request):
     tab = table.Table()
     data = []
+    search = ""
 
     if request.GET:
         search = request.GET['search']
+        if request.user.is_authenticated:
+            UserHistory.objects.create(search=search, related_user=request.user)
         results = tab.search(search)
         json_records = results.reset_index().to_json(orient ='records') 
     else:
@@ -187,7 +197,7 @@ def tables(request):
         json_records = results.reset_index().to_json(orient ='records')
 
     data = json.loads(json_records)
-    context = {'d':data}    
+    context = {'d':data, 'search_item': search}    
     
     return render(request, 'tables.html', context)
 
@@ -202,4 +212,5 @@ def sentimental_analysis(request):
     context = {'d':data}      
      
     
-    return render(request, 'sentimental_analysis.html', context)    
+    return render(request, 'sentimental_analysis.html', context)
+
