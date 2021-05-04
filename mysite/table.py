@@ -6,7 +6,15 @@ from textblob import TextBlob
 
 class Table:
 
-    def search(self, query):        
+    def search(self, query):
+        """[Search for keywords in a given field]
+
+        Args:
+            query ([string]): [keyword to search]
+
+        Returns:
+            [dataframe]: [table with results from search]
+        """           
         df = pd.read_csv("data/vaccination_tweets.csv")
         df.drop(columns=['id'], inplace=True)
         df.dropna()
@@ -42,6 +50,15 @@ class Table:
     #     return df.head(n=k)
 
     def top_polarity(self, sentiment_type, k):
+        """[Get the most negative or positive tweets]
+
+        Args:
+            sentiment_type ([string]): [negative or positive]
+            k ([integer]): [get the top k tweets of specified sentiment]
+
+        Returns:
+            [dataframe]: [table with type k tweets of specified sentiment]
+        """        
         df = pd.read_csv("data/vaccination_tweets.csv")
         df['polarity'] = df['text'].apply(lambda x: TextBlob(x).sentiment.polarity)
         df['subjectivity'] = df['text'].apply(lambda x: TextBlob(x).sentiment.subjectivity)
@@ -56,6 +73,15 @@ class Table:
         return df.head(n=k)
 
     def top_subjectivity(self, subjectivity_type, k):    
+        """[Get the most subjective or objective tweets]
+
+        Args:
+            sentiment_type ([string]): [subjective or objective]
+            k ([integer]): [get the top k tweets of specified subectivity]
+
+        Returns:
+            [dataframe]: [table with type k tweets of specified subectivity]
+        """        
         df = pd.read_csv("data/vaccination_tweets.csv")
         df['polarity'] = df['text'].apply(lambda x: TextBlob(x).sentiment.polarity)
         df['subjectivity'] = df['text'].apply(lambda x: TextBlob(x).sentiment.subjectivity)
