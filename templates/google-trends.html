@@ -83,6 +83,7 @@
                 </a>
                 <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <!-- <h6 class="collapse-header">Login Screens:</h6> -->
                         <a class="collapse-item" href="{% url 'tweet-charts' %}">Tweets</a>
                         <a class="collapse-item" href="{% url 'hashtags-charts' %}">Hashtags</a>
                         <a class="collapse-item" href="{% url 'engagement-charts' %}">Engagement</a>
@@ -104,13 +105,13 @@
                 <a class="nav-link" href="{% url 'sentimental-analysis' %}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Sentimental Analysis</span></a>
-            </li>    
+            </li>            
 			 <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'google-trends' %}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Google Trends</span></a>
-            </li>	
+            </li> 
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -196,12 +197,12 @@
                                 Profile
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/accounts/logout">
+                            <a class="dropdown-item" href="accounts/logout">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
                             </a>
                             {% else %}
-                            <a class="dropdown-item" href="/accounts/login">
+                            <a class="dropdown-item" href="accounts/login">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Login
                             </a>
@@ -218,7 +219,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Charts</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Google Charts</h1>
                     <p class="mb-4">Chart.js is a third party plugin that is used to generate the charts in this theme.
                         The charts below have been customized - for further customization options, please visit the <a
                             target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js
@@ -232,7 +233,7 @@
                             <!-- Area Chart -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Montly Engagement</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">"Covid" Interest over time in United States</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="chart-area">
@@ -247,7 +248,7 @@
                             <!-- Bar Chart -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Daily Engagement</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Pfizer Trend</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="chart-bar">
@@ -259,10 +260,10 @@
                                     <h4 id='labels'></h4><br>                                    
                                 </div>                                
                             </div>
-                            <!-- Bar Chart -->
+							<!-- Bar Chart -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Daily Retweets</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Moderna Trend</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="chart-bar">
@@ -274,10 +275,10 @@
                                     <h4 id='labels'></h4><br>                                    
                                 </div>                                
                             </div>
-                            <!-- Bar Chart -->
+							<!-- Bar Chart -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Daily Favorites</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">J&J Vaccine Trend</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="chart-bar">
@@ -288,9 +289,9 @@
                                     <code>/js/demo/chart-bar-demo.js</code> file. -->
                                     <h4 id='labels'></h4><br>                                    
                                 </div>                                
-                            </div>                                                        
+                            </div>
                         </div>
-
+                    
                 </div>
                 <!-- /.container-fluid -->
 
@@ -391,19 +392,19 @@
             data: {
                 labels: {{ line_labels|safe }},
                     datasets: [{
-                    label: "New",
-                    lineTension: 0.3,
-                    backgroundColor: "rgba(78, 115, 223, 0.05)",
-                    borderColor: "rgba(78, 115, 223, 1)",
-                    pointRadius: 3,
-                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHoverRadius: 3,
-                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHitRadius: 10,
-                    pointBorderWidth: 2,
-                    data: {{ line_data|safe }},
+                        label: "Covid ",
+                        lineTension: 0.3,
+                        backgroundColor: "rgba(78, 115, 223, 0.05)",
+                        borderColor: "rgba(78, 115, 223, 1)",
+                        pointRadius: 3,
+                        pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                        pointBorderColor: "rgba(78, 115, 223, 1)",
+                        pointHoverRadius: 3,
+                        pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                        pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        data: {{ line_data|safe }},
                 }],
         },
         options: {
@@ -475,7 +476,6 @@
         });
     </script>    
 
-
     <!-- <script src="/static/js/demo/chart-bar-demo.js"></script> -->
     <script>
        // Set new default font family and font color to mimic Bootstrap's default styling
@@ -510,15 +510,16 @@
         // Bar Chart Example
         var config = {
         // labels: ["January", "February", "March", "April", "May", "June", "July"],
-        labels: {{ bar_labels|safe }},
+            labels: {{ bar_labels|safe }},
             datasets: [{
-            label: "Bar",
-            backgroundColor: "#4e73df",
-            hoverBackgroundColor: "#2e59d9",
-            borderColor: "#4e73df",
-            data: {{ bar_data|safe }},
-            // data: {output},
-        }]
+                // label: {{ chart_title|safe }},
+                label: "Pfizer ",
+                backgroundColor: "#4e73df",
+                hoverBackgroundColor: "#2e59d9",
+                borderColor: "#4e73df",
+                data: {{ bar_data|safe }},
+                // data: {output},
+            }]
         };
 
         var ctx = document.getElementById("myBarChart");
@@ -595,247 +596,247 @@
             }
         });
     </script>    
-    
-    <!-- <script src="/static/js/demo/chart-bar-demo.js"></script> -->
-    <script>
-        // Set new default font family and font color to mimic Bootstrap's default styling
-         Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-         Chart.defaults.global.defaultFontColor = '#858796';
- 
-         function number_format(number, decimals, dec_point, thousands_sep) {
-         // *     example: number_format(1234.56, 2, ',', ' ');
-         // *     return: '1 234,56'
-         number = (number + '').replace(',', '').replace(' ', '');
-         var n = !isFinite(+number) ? 0 : +number,
-             prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-             sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-             dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-             s = '',
-             toFixedFix = function(n, prec) {
-             var k = Math.pow(10, prec);
-             return '' + Math.round(n * k) / k;
-             };
-         // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-         s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-         if (s[0].length > 3) {
-             s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-         }
-         if ((s[1] || '').length < prec) {
-             s[1] = s[1] || '';
-             s[1] += new Array(prec - s[1].length + 1).join('0');
-         }
-         return s.join(dec);
-         }
- 
-         // Bar Chart Example
-         var config = {
-         // labels: ["January", "February", "March", "April", "May", "June", "July"],
-         labels: {{ bar2_labels|safe }},
-             datasets: [{
-             label: "Bar",
-             backgroundColor: "#4e73df",
-             hoverBackgroundColor: "#2e59d9",
-             borderColor: "#4e73df",
-             data: {{ bar2_data|safe }},
-             // data: {output},
-         }]
-         };
- 
-         var ctx = document.getElementById("myBarChart2");
- 
-         var myBarChart = new Chart(ctx, {
-             type: 'bar',
-             data: config,
-             options: {
-                 maintainAspectRatio: false,
-                 layout: {
-                     padding: {
-                         left: 10,
-                         right: 25,
-                         top: 25,
-                         bottom: 0
-                     }
-                 },
-                 scales: {
-                     xAxes: [{
-                         time: {
-                         unit: 'month'
-                         },
-                         gridLines: {
-                             display: false,
-                             drawBorder: false
-                         },
-                         ticks: {
-                             maxTicksLimit: 6
-                         },
-                         maxBarThickness: 25,
-                     }],
-                     yAxes: [{
-                         ticks: {
-                             min: 0,
-                             // max: 1000,
-                             maxTicksLimit: 5,
-                             padding: 10,
-                             // Include a dollar sign in the ticks
-                             callback: function(value, index, values) {
-                                 return number_format(value);
-                             }
-                         },
-                         gridLines: {
-                             color: "rgb(234, 236, 244)",
-                             zeroLineColor: "rgb(234, 236, 244)",
-                             drawBorder: false,
-                             borderDash: [2],
-                             zeroLineBorderDash: [2]
-                         }
-                     }],
-                 },
-                     legend: {
-                         display: false
-                     },
-                     tooltips: {
-                         titleMarginBottom: 10,
-                         titleFontColor: '#6e707e',
-                         titleFontSize: 14,
-                         backgroundColor: "rgb(255,255,255)",
-                         bodyFontColor: "#858796",
-                         borderColor: '#dddfeb',
-                         borderWidth: 1,
-                         xPadding: 15,
-                         yPadding: 15,
-                         displayColors: false,
-                         caretPadding: 10,
-                         callbacks: {
-                             label: function(tooltipItem, chart) {
-                                 var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                                 return datasetLabel + number_format(tooltipItem.yLabel);
-                             }
-                     }
-                 },
-             }
-         });
-     </script>  
-     
-         <!-- <script src="/static/js/demo/chart-bar-demo.js"></script> -->
-    <script>
-        // Set new default font family and font color to mimic Bootstrap's default styling
-         Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-         Chart.defaults.global.defaultFontColor = '#858796';
- 
-         function number_format(number, decimals, dec_point, thousands_sep) {
-         // *     example: number_format(1234.56, 2, ',', ' ');
-         // *     return: '1 234,56'
-         number = (number + '').replace(',', '').replace(' ', '');
-         var n = !isFinite(+number) ? 0 : +number,
-             prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-             sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-             dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-             s = '',
-             toFixedFix = function(n, prec) {
-             var k = Math.pow(10, prec);
-             return '' + Math.round(n * k) / k;
-             };
-         // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-         s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-         if (s[0].length > 3) {
-             s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-         }
-         if ((s[1] || '').length < prec) {
-             s[1] = s[1] || '';
-             s[1] += new Array(prec - s[1].length + 1).join('0');
-         }
-         return s.join(dec);
-         }
- 
-         // Bar Chart Example
-         var config = {
-         // labels: ["January", "February", "March", "April", "May", "June", "July"],
-         labels: {{ bar3_labels|safe }},
-             datasets: [{
-             label: "Bar",
-             backgroundColor: "#4e73df",
-             hoverBackgroundColor: "#2e59d9",
-             borderColor: "#4e73df",
-             data: {{ bar3_data|safe }},
-             // data: {output},
-         }]
-         };
- 
-         var ctx = document.getElementById("myBarChart3");
- 
-         var myBarChart = new Chart(ctx, {
-             type: 'bar',
-             data: config,
-             options: {
-                 maintainAspectRatio: false,
-                 layout: {
-                     padding: {
-                         left: 10,
-                         right: 25,
-                         top: 25,
-                         bottom: 0
-                     }
-                 },
-                 scales: {
-                     xAxes: [{
-                         time: {
-                         unit: 'month'
-                         },
-                         gridLines: {
-                             display: false,
-                             drawBorder: false
-                         },
-                         ticks: {
-                             maxTicksLimit: 6
-                         },
-                         maxBarThickness: 25,
-                     }],
-                     yAxes: [{
-                         ticks: {
-                             min: 0,
-                             // max: 1000,
-                             maxTicksLimit: 5,
-                             padding: 10,
-                             // Include a dollar sign in the ticks
-                             callback: function(value, index, values) {
-                                 return number_format(value);
-                             }
-                         },
-                         gridLines: {
-                             color: "rgb(234, 236, 244)",
-                             zeroLineColor: "rgb(234, 236, 244)",
-                             drawBorder: false,
-                             borderDash: [2],
-                             zeroLineBorderDash: [2]
-                         }
-                     }],
-                 },
-                     legend: {
-                         display: false
-                     },
-                     tooltips: {
-                         titleMarginBottom: 10,
-                         titleFontColor: '#6e707e',
-                         titleFontSize: 14,
-                         backgroundColor: "rgb(255,255,255)",
-                         bodyFontColor: "#858796",
-                         borderColor: '#dddfeb',
-                         borderWidth: 1,
-                         xPadding: 15,
-                         yPadding: 15,
-                         displayColors: false,
-                         caretPadding: 10,
-                         callbacks: {
-                             label: function(tooltipItem, chart) {
-                                 var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                                 return datasetLabel + number_format(tooltipItem.yLabel);
-                             }
-                     }
-                 },
-             }
-         });
-     </script>  
 
+    <!-- <script src="/static/js/demo/chart-bar-demo.js"></script> -->
+	<script>
+       // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#858796';
+
+        function number_format(number, decimals, dec_point, thousands_sep) {
+        // *     example: number_format(1234.56, 2, ',', ' ');
+        // *     return: '1 234,56'
+        number = (number + '').replace(',', '').replace(' ', '');
+        var n = !isFinite(+number) ? 0 : +number,
+            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+            s = '',
+            toFixedFix = function(n, prec) {
+            var k = Math.pow(10, prec);
+            return '' + Math.round(n * k) / k;
+            };
+        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+        s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+        if (s[0].length > 3) {
+            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+        }
+        if ((s[1] || '').length < prec) {
+            s[1] = s[1] || '';
+            s[1] += new Array(prec - s[1].length + 1).join('0');
+        }
+        return s.join(dec);
+        }
+
+        // Bar Chart Example
+        var config = {
+        // labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: {{ bar_labels|safe }},
+            datasets: [{
+                // label: {{ chart_title|safe }},
+                label: "Moderna ",
+                backgroundColor: "#4e73df",
+                hoverBackgroundColor: "#2e59d9",
+                borderColor: "#4e73df",
+                data: {{ bar2_data|safe }},
+                // data: {output},
+            }]
+        };
+
+        var ctx = document.getElementById("myBarChart2");
+
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: config,
+            options: {
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 25,
+                        top: 25,
+                        bottom: 0
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        time: {
+                        unit: 'month'
+                        },
+                        gridLines: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 6
+                        },
+                        maxBarThickness: 25,
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            // max: 1000,
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, values) {
+                                return number_format(value);
+                            }
+                        },
+                        gridLines: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    }],
+                },
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        titleMarginBottom: 10,
+                        titleFontColor: '#6e707e',
+                        titleFontSize: 14,
+                        backgroundColor: "rgb(255,255,255)",
+                        bodyFontColor: "#858796",
+                        borderColor: '#dddfeb',
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        caretPadding: 10,
+                        callbacks: {
+                            label: function(tooltipItem, chart) {
+                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                return datasetLabel  + number_format(tooltipItem.yLabel);
+                            }
+                    }
+                },
+            }
+        });
+    </script>    
+    <!-- <script src="/static/js/demo/chart-bar-demo.js"></script> -->
+	<script>
+       // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#858796';
+
+        function number_format(number, decimals, dec_point, thousands_sep) {
+        // *     example: number_format(1234.56, 2, ',', ' ');
+        // *     return: '1 234,56'
+        number = (number + '').replace(',', '').replace(' ', '');
+        var n = !isFinite(+number) ? 0 : +number,
+            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+            s = '',
+            toFixedFix = function(n, prec) {
+            var k = Math.pow(10, prec);
+            return '' + Math.round(n * k) / k;
+            };
+        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+        s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+        if (s[0].length > 3) {
+            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+        }
+        if ((s[1] || '').length < prec) {
+            s[1] = s[1] || '';
+            s[1] += new Array(prec - s[1].length + 1).join('0');
+        }
+        return s.join(dec);
+        }
+
+        // Bar Chart Example
+        var config = {
+        // labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: {{ bar_labels|safe }},
+            datasets: [{
+                // label: {{ chart_title|safe }},
+                label: "J&J ",
+                backgroundColor: "#4e73df",
+                hoverBackgroundColor: "#2e59d9",
+                borderColor: "#4e73df",
+                data: {{ bar3_data|safe }},
+                // data: {output},
+            }]
+        };
+
+        var ctx = document.getElementById("myBarChart3");
+
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: config,
+            options: {
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 25,
+                        top: 25,
+                        bottom: 0
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        time: {
+                        unit: 'month'
+                        },
+                        gridLines: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 6
+                        },
+                        maxBarThickness: 25,
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            // max: 1000,
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, values) {
+                                return number_format(value);
+                            }
+                        },
+                        gridLines: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    }],
+                },
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        titleMarginBottom: 10,
+                        titleFontColor: '#6e707e',
+                        titleFontSize: 14,
+                        backgroundColor: "rgb(255,255,255)",
+                        bodyFontColor: "#858796",
+                        borderColor: '#dddfeb',
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        caretPadding: 10,
+                        callbacks: {
+                            label: function(tooltipItem, chart) {
+                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                return datasetLabel  + number_format(tooltipItem.yLabel);
+                            }
+                    }
+                },
+            }
+        });
+    </script>
 </body>
 
 </html>

@@ -9,7 +9,7 @@ from mysite.models import Post
 from pythonScripts import twitterCollection
 from pythonScripts import googletrends
 import simplejson as json
-from mysite import visualization, table
+from mysite import visualization, table, googleTrends
 from .models import UserHistory
 
 import logging
@@ -228,4 +228,18 @@ def sentimental_analysis(request):
                     'sub_data':sub_data, 'obj_data': obj_data}      
      
     
-    return render(request, 'sentimental-analysis.html', context)    
+    return render(request, 'sentimental-analysis.html', context) 
+
+def google_trends(request):
+    line = googleTrends.Line()
+    bar = googleTrends.Bar()
+
+    line_labels, line_data = line.google_line()
+    bar_labels, bar_data = bar.google_pfizer()
+    bar2_labels, bar2_data = bar.google_moderna()
+    bar3_labels, bar3_data = bar.google_JJ()
+    
+    all_data = {"line_labels": line_labels,"line_data": line_data, "bar_labels": bar_labels, "bar_data":bar_data,
+                    "bar2_labels": bar2_labels, "bar2_data":bar2_data, "bar3_labels": bar3_labels, "bar3_data":bar3_data}
+    
+    return render(request, 'google-trends.html', all_data)    

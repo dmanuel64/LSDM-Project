@@ -18,3 +18,4 @@ vaderSentiment
 kaleido
 notebook
 ipywidgets
+simplejson

@@ -37,5 +37,6 @@ urlpatterns = [
     path('tables/', views.tables,name="tables"),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('profile/', views.user_profile, name='user-profile')
+    path('profile/', views.user_profile, name='user-profile'),
+    path('google-trends/', views.google_trends,name="google-trends")
 ]
