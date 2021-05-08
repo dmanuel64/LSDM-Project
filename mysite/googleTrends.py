@@ -6,140 +6,45 @@ pytrend = TrendReq(hl='en-US', tz=360)
 
 class Line:
 
-    def google_line(self):
-        colnames = ["keywords"]
-        df = pd.read_csv("data/keyword_list.csv", names=colnames)
-        df2 = df["keywords"].values.tolist()
-        df2.remove("Keywords")
-
+    def google_line(self, keywords):
         dataset = []
 
-        for x in range(0,len(df2)):
-            keywords = [df2[x]]
-            pytrend.build_payload(
-            kw_list=keywords,
-            cat=0,
-            timeframe='2020-01-01 2021-05-01',
-            geo='US')
-            data = pytrend.interest_over_time()
-            if not data.empty:
-                data = data.drop(labels=['isPartial'],axis='columns')
-                dataset.append(data)
+        pytrend.build_payload(kw_list=[keywords], cat=0, timeframe='2020-01-01 2021-05-01',geo='US')
+        data = pytrend.interest_over_time()
+
+        if not data.empty:
+            data = data.drop(labels=['isPartial'],axis='columns')
+            dataset.append(data)
 
         result = pd.concat(dataset, axis=1)
-        result.to_csv('data/search_trends.csv')
+        result.reset_index(level=0, inplace=True)
+        result['date']=pd.to_datetime(result.date)
+        result = result.sort_values(by='date')
+        result['date'] = result['date'].dt.strftime('%m/%y')
 
-        df3 = pd.read_csv("data/search_trends.csv")
-        df3['date']=pd.to_datetime(df3.date)
-        df3 = df3.sort_values(by='date')
-        df3['date'] = df3['date'].dt.strftime('%m/%y')
-
-
-        line = df3[['date', 'covid']]
+        line = result[['date', keywords]]
         
-
-        return list(line['date'].values), list(line['covid'].values)
+        return list(line['date'].values), list(line[keywords].values)
         
 class Bar:        
 
-    def google_pfizer(self):
-        colnames = ["keywords"]
-        df = pd.read_csv("data/keyword_list2.csv", names=colnames)
-        df2 = df["keywords"].values.tolist()
-        df2.remove("Keywords")
-
+    def google_bar(self, keywords):
         dataset = []
 
-        for x in range(0,len(df2)):
-            keywords = [df2[x]]
-            pytrend.build_payload(
-            kw_list=keywords,
-            cat=0,
-            timeframe='2021-01-01 2021-05-01',
-            geo='US')
-            data = pytrend.interest_over_time()
-            if not data.empty:
-                data = data.drop(labels=['isPartial'],axis='columns')
-                dataset.append(data)
+        pytrend.build_payload(kw_list=[keywords],cat=0,timeframe='2021-01-01 2021-05-01',geo='US')
+        data = pytrend.interest_over_time()
 
-            result = pd.concat(dataset, axis=1)
-            result.to_csv('data/search_trends2.csv')
+        if not data.empty:
+            data = data.drop(labels=['isPartial'],axis='columns')
+            dataset.append(data)
 
-        df3 = pd.read_csv("data/search_trends2.csv")
-        df3['date']=pd.to_datetime(df3.date)
-        df3 = df3.sort_values(by='date')
-        df3['date'] = df3['date'].dt.strftime('%m/%y')
+        result = pd.concat(dataset, axis=1)
+        result.reset_index(level=0, inplace=True)
+        result['date']=pd.to_datetime(result.date)
+        result = result.sort_values(by='date')
+        result['date'] = result['date'].dt.strftime('%m/%y')
 
-
-        line = df3[['date', 'pfizer']]
+        line = result[['date', keywords]]
         
-
-        return list(line['date'].values), list(line['pfizer'].values)
-        
-    def google_moderna(self):
-        colnames = ["keywords"]
-        df = pd.read_csv("data/keyword_list3.csv", names=colnames)
-        df2 = df["keywords"].values.tolist()
-        df2.remove("Keywords")
-
-        dataset = []
-
-        for x in range(0,len(df2)):
-            keywords = [df2[x]]
-            pytrend.build_payload(
-            kw_list=keywords,
-            cat=0,
-            timeframe='2021-01-01 2021-05-01',
-            geo='US')
-            data = pytrend.interest_over_time()
-            if not data.empty:
-                data = data.drop(labels=['isPartial'],axis='columns')
-                dataset.append(data)
-
-            result = pd.concat(dataset, axis=1)
-            result.to_csv('data/search_trends3.csv')
-
-        df3 = pd.read_csv("data/search_trends3.csv")
-        df3['date']=pd.to_datetime(df3.date)
-        df3 = df3.sort_values(by='date')
-        df3['date'] = df3['date'].dt.strftime('%m/%y')
-
-
-        line = df3[['date', 'moderna']]
-        
-
-        return list(line['date'].values), list(line['moderna'].values)   
-
-    def google_JJ(self):
-        colnames = ["keywords"]
-        df = pd.read_csv("data/keyword_list4.csv", names=colnames)
-        df2 = df["keywords"].values.tolist()
-        df2.remove("Keywords")
-
-        dataset = []
-
-        for x in range(0,len(df2)):
-            keywords = [df2[x]]
-            pytrend.build_payload(
-            kw_list=keywords,
-            cat=0,
-            timeframe='2021-01-01 2021-05-01',
-            geo='US')
-            data = pytrend.interest_over_time()
-            if not data.empty:
-                data = data.drop(labels=['isPartial'],axis='columns')
-                dataset.append(data)
-
-            result = pd.concat(dataset, axis=1)
-            result.to_csv('data/search_trends4.csv')
-
-        df3 = pd.read_csv("data/search_trends4.csv")
-        df3['date']=pd.to_datetime(df3.date)
-        df3 = df3.sort_values(by='date')
-        df3['date'] = df3['date'].dt.strftime('%m/%y')
-
-
-        line = df3[['date', 'J&J Vaccine']]
-        
-
-        return list(line['date'].values), list(line['J&J Vaccine'].values)        
+        return list(line['date'].values), list(line[keywords].values)
+              

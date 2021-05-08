@@ -234,10 +234,10 @@ def google_trends(request):
     line = googleTrends.Line()
     bar = googleTrends.Bar()
 
-    line_labels, line_data = line.google_line()
-    bar_labels, bar_data = bar.google_pfizer()
-    bar2_labels, bar2_data = bar.google_moderna()
-    bar3_labels, bar3_data = bar.google_JJ()
+    line_labels, line_data = line.google_line('covid')
+    bar_labels, bar_data = bar.google_bar('pfizer')
+    bar2_labels, bar2_data = bar.google_bar('moderna')
+    bar3_labels, bar3_data = bar.google_bar('J&J Vaccine')
     
     all_data = {"line_labels": line_labels,"line_data": line_data, "bar_labels": bar_labels, "bar_data":bar_data,
                     "bar2_labels": bar2_labels, "bar2_data":bar2_data, "bar3_labels": bar3_labels, "bar3_data":bar3_data}
