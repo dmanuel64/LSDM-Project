@@ -32,7 +32,7 @@ def getHashtagInfo(params, hashtag_name) :
 #Gets recent media for a given hashtag. This will try to get up to count number of posts, although the number of posts
 #returned by the api may end up being more than this. Usually the total number of returned posts will end up being at most
 #count + 24.
-def hashtagMediaWrapper(hashtag_name, count=25):
+def hashtagMediaWrapper(hashtag_name, count=25, check_for_posts=True):
     #Get credentials from defines.py
     params = getCreds()
 
@@ -63,6 +63,9 @@ def hashtagMediaWrapper(hashtag_name, count=25):
     if len(fullResponse) == 0:
         return fullResponse
 
+    if check_for_posts and mongoapi.checkForPost(fullResponse[-1]['id'], 'instagram', hashtag_name):
+            print("Already found post in database. Stopping count")
+            return fullResponse
     #Keep requesting more media while we have not met the requested amount
     while len(fullResponse) < count:
         #Decrement the limit parameter passed to the api. This should allow us to eventually get the exact number of posts requested
@@ -77,11 +80,15 @@ def hashtagMediaWrapper(hashtag_name, count=25):
             endpointParams['after'] = partResponse['json_data']['paging']['cursors']['after']
         except:
             break
+        
+        if check_for_posts and mongoapi.checkForPost(fullResponse[-1]['id'], 'instagram', hashtag_name):
+            print("Already found post in database. Stopping count")
+            break
     return fullResponse
 
 if __name__ == '__main__':
     hashtag = input()
-    output = hashtagMediaWrapper(hashtag, count=25)
+    output = hashtagMediaWrapper(hashtag, count=250, check_for_posts=False)
     if len(output) > 0:
         mongoapi.insertMongoPosts(output, "instagram", hashtag)
         print(output[-1])

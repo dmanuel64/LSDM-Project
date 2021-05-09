@@ -6,6 +6,20 @@ and then take all the posts stored in a mongodb instance and dump them to a csv 
 
 import csv
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+
+#Check to see if a post has already been inserted into the database. This helps make sure we're not continually redownloading and reinserting the same posts
+def checkForPost(idStr: str, dbName: str, collectionName: str, connectionString: str = ''):
+    if connectionString != '':
+        client = MongoClient(connectionString)
+    else:
+        client = MongoClient()
+
+    if client[dbName][collectionName].find_one({"_id": idStr}) == None:
+        return False
+    else:
+        return True
+
 
 #Insert a list of posts into a MongoDB database
 #Returns the number of posts that were written to the database
@@ -18,11 +32,13 @@ def insertMongoPosts(postList: list, dbName: str, collectionName: str, connectio
     else:
         client = MongoClient()
 
-    #iterare through the list of posts that was passed
+    #iterate through the list of posts that was passed
     for post in postList:
         try:
+            if checkForPost(post['id'], dbName, collectionName, connectionString):
+                continue
             #We want to use the instagram provided post ID as the mongodb id as well
-            if post['id'] != '':
+            elif post['id'] != '':
                 #Here we insert into the mongoDB database, setting the id field to the instagram provided one
                 post['_id'] = post['id']
                 client[dbName][collectionName].insert_one(post)
