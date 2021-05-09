@@ -82,7 +82,6 @@ def login_page(request):
     else:
         return redirect('/')
 
-
 def forgot(request):
     return render(request, 'forgot-password.html')
 
@@ -94,26 +93,33 @@ def user_profile(request):
     else:
         return redirect('/')
 
+"""TODO: Fix wordcloud alignment"""
 def tweet_chart(request):
     bar = visualization.Bar()
+    wc = visualization.Wordcloud()
 
     bar_labels, bar_data = bar.tweets_bar()
     bar2_labels, bar2_data = bar.per_day()
     line_labels, line_data = bar.monthly_tweets()
     
+    wc.text_wordcloud("text")
+
     all_data = {"line_labels": line_labels,"line_data": line_data, "bar_labels": bar_labels, "bar_data":bar_data, 
                     "bar2_labels": bar2_labels, "bar2_data":bar2_data }
 
     return render(request, 'tweet-charts.html', all_data)
 
+"""TODO: Fix wordcloud alignment"""
 def hashtags_chart(request):
     pie = visualization.Pie()
     bar = visualization.Bar()
+    wc = visualization.Wordcloud()
 
     pie_labels, pie_data = pie.top_pie(5, "hashtags")
     bar_labels, bar_data = bar.top_hashtag(5)
     bar2_labels, bar2_data = bar.hashtag_retweet_favorite("retweets", 5)
     bar3_labels, bar3_data = bar.hashtag_retweet_favorite("favorites", 5)
+    wc.text_wordcloud("hashtags")
 
     all_data = {"pie_labels":pie_labels, "pie_data":pie_data, "bar_labels": bar_labels,"bar_data": bar_data,
                     "bar2_labels": bar2_labels, "bar2_data":bar2_data, "bar3_labels": bar3_labels, "bar3_data":bar3_data}
@@ -158,11 +164,14 @@ def sentiment_chart(request):
 def source_chart(request):
     bar = visualization.Bar()
     pie = visualization.Pie()
+    map = visualization.Wordcloud()
 
     pie_labels, pie_data = pie.top_pie(5, "source")
     pie2_labels, pie2_data = pie.top_pie(5, "user_location")
     bar_labels, bar_data = bar.source_max(5)
     bar2_labels, bar2_data = bar.top_location(5)  
+
+    map.country_map()
 
     all_data = {"pie_labels":pie_labels, "pie_data":pie_data, "pie2_labels":pie2_labels, "pie2_data":pie2_data,
                     "bar_labels": bar_labels, "bar_data":bar_data, "bar2_labels": bar2_labels, "bar2_data":bar2_data }

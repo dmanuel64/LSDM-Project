@@ -293,41 +293,23 @@ class Pie:
         return labels, sizes
 
 class Wordcloud:
-    def __init__(self):
-        df = pd.read_csv("data/vaccination_tweets.csv")
-
-    def show_wordcloud(self, text, title):
-        stop_words = set(STOPWORDS)
-        stop_words.update(["t", "co", "https", "amp", "U"])
-        wordcloud = WordCloud(stopwords=stop_words, scale=4, max_font_size=50, 
-                max_words=500,background_color="black").generate(text)
-
-        fig = plt.figure(1, figsize=(8,8))
-        plt.axis('off')
-        fig.suptitle(title)
-        # plt.imshow(wordcloud, interpolation='bilinear')
-        # plt.savefig(os.path.join(self.word_dir, title + ".png"))
-
     def text_wordcloud(self, col_name):
-        df = pd.read_csv("data/vaccination_tweets.csv")
+        df = pd.read_csv("data/vaccination_tweets.csv", quotechar='"', delimiter=',').dropna()
+
         data = df[col_name]
-        title = 'Prevalent' + col_name + ' in tweets'     
         text = " ".join(t for t in data.dropna())
         stop_words = set(STOPWORDS)
         stop_words.update(["t", "co", "https", "amp", "U"])
 
-        wordcloud = WordCloud(stopwords=stop_words, scale=4, max_font_size=50, 
-                max_words=500,background_color="black").generate(text)
-
-        fig = plt.figure(1, figsize=(8,8))
+        wordcloud = WordCloud(stopwords=stop_words, scale=4, max_font_size=50, max_words=500,background_color="black").generate(text)
+        fig = plt.figure(figsize=(16,4))
         plt.axis('off')
-        plt.imshow(wordcloud, interpolation='bilinear')
-        # plt.savefig(os.path.join(self.word_dir, title + ".png"))
         
-        return wordcloud
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.savefig("static/img/"+col_name+".png", bbox_inches='tight')
 
-
-    def country_map(self, df):
+    def country_map(self):
+        df = pd.read_csv("data/vaccination_tweets.csv")
         loc_df = df['user_location'].str.split(',',expand=True)
         loc_df=loc_df.rename(columns={0:'fst_loc',1:'snd_loc'})
         # Remove Spaces 
@@ -343,10 +325,13 @@ class Wordcloud:
         loc_df = loc_df.replace({"snd_loc": state_fix}) 
         df_loc = pd.DataFrame(loc_df['snd_loc'].value_counts()[:20]).reset_index()
 
-        fig = px.choropleth(df_loc, locations = df_loc['index'],
-                            color = df_loc['snd_loc'],locationmode='country names', hover_name = df_loc['snd_loc'], 
-                            color_continuous_scale = px.colors.sequential.Inferno)
-        fig.write_image(os.path.join(self.word_dir, "map.png"))  
+        fig = px.choropleth(df_loc, locations = df_loc['index'], color = df_loc['snd_loc'], locationmode='country names', 
+                                color_continuous_scale = px.colors.sequential.Inferno)
+        fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+        # fig.layout.autosize = True
+        fig.layout.height = 300
+        fig.layout.width = 1000
+        fig.write_image("static/img/map.png")  
 
 class Line:
 
