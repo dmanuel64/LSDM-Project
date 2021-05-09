@@ -25,9 +25,14 @@ def search(request):
     if request.method == 'POST':
         #Get the requested search term and load the respective data
         get_text = request.POST.get('searchInput')
-        twitterCollection.twitter(get_text)
-        googletrends.google(get_text)
-    return render(request, 'index.html')
+        twitter = twitterCollection.twitter(get_text)
+        google = googletrends.google(get_text)
+        context={
+            'location': google,
+            'reUser': twitter[0],
+            'popUser': twitter[1],
+        }
+    return render(request, 'index.html', context)
 
 
 def load_database():

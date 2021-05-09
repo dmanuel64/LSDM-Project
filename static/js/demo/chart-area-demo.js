@@ -1,5 +1,5 @@
 // Set new default font family and font color to mimic Bootstrap's default styling
-Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+/*Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
 function number_format(number, decimals, dec_point, thousands_sep) {
@@ -25,10 +25,13 @@ function number_format(number, decimals, dec_point, thousands_sep) {
     s[1] += new Array(prec - s[1].length + 1).join('0');
   }
   return s.join(dec);
-}
-
+}*/
+var img = document.createElement("img");
+img.src = "data/testLine.png";
+var src = document.getElementById("myAreaChart")
+src.appendChild(img);
 // Area Chart Example
-var ctx = document.getElementById("myAreaChart");
+/*var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
@@ -115,4 +118,4 @@ var myLineChart = new Chart(ctx, {
       }
     }
   }
-});
+});*/
