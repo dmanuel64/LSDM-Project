@@ -301,8 +301,8 @@ class Wordcloud:
         stop_words = set(STOPWORDS)
         stop_words.update(["t", "co", "https", "amp", "U"])
 
-        wordcloud = WordCloud(stopwords=stop_words, scale=4, max_font_size=50, max_words=500,background_color="black").generate(text)
-        fig = plt.figure(figsize=(16,4))
+        wordcloud = WordCloud(stopwords=stop_words, scale=4, max_font_size=50, max_words=250,background_color="black").generate(text)
+        fig = plt.figure(figsize=(6,16))
         plt.axis('off')
         
         plt.imshow(wordcloud, interpolation='bilinear')
