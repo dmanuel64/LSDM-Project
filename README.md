@@ -43,8 +43,6 @@ For other platforms, see the MongoDB website or distribution documentation for i
 
 ## Usage
 
-**Testing Server**
-
 Run the start_web_app.bash bash script to start the web server:
 ```
 bash start_web_app.bash
