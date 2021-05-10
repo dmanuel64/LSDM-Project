@@ -66,16 +66,21 @@ def hashtagMediaWrapper(hashtag_name, count=25, check_for_posts=True):
     if check_for_posts and mongoapi.checkForPost(fullResponse[-1]['id'], 'instagram', hashtag_name):
             print("Already found post in database. Stopping count")
             return fullResponse
+    try:
+        mongoapi.insertMongoPosts(fullResponse, "instagram", hashtag)
+    except:
+        pass
     #Keep requesting more media while we have not met the requested amount
     while len(fullResponse) < count:
         #Decrement the limit parameter passed to the api. This should allow us to eventually get the exact number of posts requested
         endpointParams['limit'] -= len(fullResponse)
         #Sleep to try to avoid being rate limited
-        time.sleep(1)
+        time.sleep(3)
         #Repeat the request 
-        partResponse = makeApiCall(endpointParams['url'], endpointParams, params['debug'] )
+        partResponse = makeApiCall(endpointParams['url'], endpointParams, params['debug'])
         fullResponse.extend(partResponse['json_data']['data'])
         try:
+            mongoapi.insertMongoPosts(partReponse['json_data']['data'], "instagram", hashtag)
             #Try to get the cursor for the next page. If this fails, there's no more data, so exit
             endpointParams['after'] = partResponse['json_data']['paging']['cursors']['after']
         except:
@@ -84,13 +89,14 @@ def hashtagMediaWrapper(hashtag_name, count=25, check_for_posts=True):
         if check_for_posts and mongoapi.checkForPost(fullResponse[-1]['id'], 'instagram', hashtag_name):
             print("Already found post in database. Stopping count")
             break
+        
     return fullResponse
 
 if __name__ == '__main__':
     hashtag = input()
-    output = hashtagMediaWrapper(hashtag, count=250, check_for_posts=False)
+    output = hashtagMediaWrapper(hashtag, count=200, check_for_posts=False)
     if len(output) > 0:
+        print("Inserting %d posts to database" % (len(output)))
         mongoapi.insertMongoPosts(output, "instagram", hashtag)
-        print(output[-1])
     else:
         print("Empty Response")
