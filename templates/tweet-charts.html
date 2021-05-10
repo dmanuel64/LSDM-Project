@@ -219,11 +219,8 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Charts</h1>
-                    <p class="mb-4">Chart.js is a third party plugin that is used to generate the charts in this theme.
-                        The charts below have been customized - for further customization options, please visit the <a
-                            target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js
-                            documentation</a>.</p>
+                    <h1 class="h3 mb-2 text-gray-800">Tweets Charts</h1>
+                    <p class="mb-4">Visualization of tweets analysis</a>.</p>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -278,7 +275,18 @@
                                     <code>/js/demo/chart-bar-demo.js</code> file. -->
                                     <h4 id='labels'></h4><br>                                    
                                 </div>                                
-                            </div>
+                            </div>      
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary"> Tweets Wordcloud</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <div id="wordcloud"></div>
+                                    </div>
+                                </div>                                 
+                            </div>                                          
                     </div>
 
                 </div>
@@ -706,6 +714,13 @@
             }
         });
     </script>    
+
+<script type="text/javascript">
+    var img = document.createElement("img");
+    img.src = "{% static 'img/text.png' %}";
+    var src = document.getElementById("wordcloud")
+    src.appendChild(img);
+</script>
 
 </body>
 
