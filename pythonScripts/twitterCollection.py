@@ -5,10 +5,10 @@ import matplotlib.pyplot as plot
 import numpy as np
 
 # Twitter credentials to access Twitter API
-consumer_key = "z28wXtL4NjuD3n3G88n1o0BFw"
-consumer_secret = "DSebmaKfKmjqRLbncFcIayR8Q96de6nCXFI0O1qdL8YST5JU9L"
-token_key = "3270448494-agr0ukiuC17nn3vXVpIGoctvaQu7kKFn7E2REfk"
-token_secret = "VsJdh60xllZAlq7IJmjR4I2HlEuGLeRAoSZd3xYefe8dT"
+consumer_key = "wauZsdG55Ly7VPFQ6bMOpaTxS"
+consumer_secret = "DG8l6hGKyYpZk0MMlGxpeIKl1iyRfZrZLE1BxNntKmObGbfGwW"
+token_key = "1353538103529664514-kKPU3vb8Yi7xkGwmFVWz4qt8iNCYcl"
+token_secret = "hOorZorcO1qYjSSEKsk0GSSj7mWntObzHyWPFAjTffzQt"
 authentication = tweepy.OAuthHandler(consumer_key, consumer_secret)
 authentication.set_access_token(token_key, token_secret)
 api = tweepy.API(authentication)
