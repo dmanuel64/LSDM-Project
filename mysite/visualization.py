@@ -304,7 +304,6 @@ class Wordcloud:
         wordcloud = WordCloud(stopwords=stop_words, scale=4, max_font_size=50, max_words=250,background_color="black").generate(text)
         fig = plt.figure(figsize=(6,16))
         plt.axis('off')
-        
         plt.imshow(wordcloud, interpolation='bilinear')
         plt.savefig("static/img/"+col_name+".png", bbox_inches='tight')
 

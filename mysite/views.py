@@ -93,7 +93,6 @@ def user_profile(request):
     else:
         return redirect('/')
 
-"""TODO: Fix wordcloud alignment"""
 def tweet_chart(request):
     bar = visualization.Bar()
     wc = visualization.Wordcloud()
@@ -109,7 +108,6 @@ def tweet_chart(request):
 
     return render(request, 'tweet-charts.html', all_data)
 
-"""TODO: Fix wordcloud alignment"""
 def hashtags_chart(request):
     pie = visualization.Pie()
     bar = visualization.Bar()
@@ -217,12 +215,21 @@ def tables(request):
 """TODO: Enable sentiment analysis on input"""
 def sentiment_analysis(request):
     tab = table.Table()
+    polarity = 0.0
+    subjectivity = 0.0
 
+<<<<<<< HEAD
     # if request.GET:
     #     input_sent = request.GET
     #     polarity, subjectivity = tab.input_sentiment(input_sent)
     #     print(polarity, subjectivity)
     # else:
+=======
+    if request.GET:
+        search = request.GET['search']
+        polarity, subjectivity = tab.input_sentimental(search)
+    
+>>>>>>> 665359bfd14ea7710e4bbbcb44f1aa2a7ac4b65f
     results = tab.top_polarity("positive", 10)  
     json_records = results.reset_index().to_json(orient ='records')
     pos_data = json.loads(json_records)
@@ -240,8 +247,8 @@ def sentiment_analysis(request):
     obj_data = json.loads(json_records)        
 
     context = {'pos_data':pos_data,'neg_data':neg_data,
-                    'sub_data':sub_data, 'obj_data': obj_data}      
-     
+                    'sub_data':sub_data, 'obj_data': obj_data,
+                        'sentiment':[polarity, subjectivity]}      
     
     return render(request, 'sentiment-analysis.html', context) 
 

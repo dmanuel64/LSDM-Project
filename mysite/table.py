@@ -28,7 +28,6 @@ class Table:
                         'text', 'hashtags', 'source', 'retweets', 'favorites', 'is_retweet']]
 
         if ':' in query: 
-            print("ere")
             type, keywords = query.split(":")
             if type not in list(df):
                 type = "text"

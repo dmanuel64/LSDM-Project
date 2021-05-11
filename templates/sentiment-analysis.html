@@ -135,27 +135,34 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <form class="form-inline">
+                    <!-- <form class="form-inline">
                         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                             <i class="fa fa-bars"></i>
                         </button>
-                    </form>
-
+                    </form> -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
                     <!-- Topbar Search -->
-                    <form
+                    <!-- <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <form action = "" method = "get"></form>
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Analyze your"
-                                    aria-label="Search" aria-describedby="basic-addon2" name="search">
+                            {% if search_item %}
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Analyze  you tweet..."
+                                    aria-label="Search" aria-describedby="basic-addon2" name="search" value="{{ search_item }}">
+                            {% else %}
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Analyze  you tweet..."
+                                    aria-label="Search" aria-describedby="basic-addon2" name="search">                            
+                            {% endif %}
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-primary" type="button">
                                         <i class="fas fa-search fa-sm"></i>
                                     </button>
-                                </form>
-                            </div>
+                                </form> -->
+                            <!-- </div>
                         </div>
-                    </form>
+                    </form> -->
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -205,14 +212,42 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">To search for specific column use the following format "column_name: keyword", 
-                        i.e. "user_location: canada". If no column is specified, it will automatically return tweets with that keyword.</p>
+                    <h1 class="h3 mb-2 text-gray-800">Sentiment Analysis</h1>
+                    <p class="mb-4">Polarity is float which lies in the range of [-1,1] where 1 means positive statement and -1 means a negative statement. 
+                        Subjective sentences generally refer to personal opinion, emotion or judgment whereas objective refers to factual information. 
+                        Subjectivity is also a float which lies in the range of [0,1].</p>
+                
+                    <div class="row">
+                    <!-- DataTales Example -->
+                        <div class="col-xl-6">
+                            <form class="d-none d-lg-inline-block form-inline mr-auto ml-lg-3 my-2 my-lg-0 mw-100 navbar-search">
+                                <div class="mb-4 input-group">
+                                    <form action = "" method = "get"></form>
+                                    {% if search_item %}
+                                        <input type="text" class="form-control bg-white border-2 large" placeholder="Analyze your tweet..."
+                                            aria-label="Search" aria-describedby="basic-addon2" name="search" value="{{ search_item }}">
+                                    {% else %}
+                                        <input type="text" class="form-control bg-white border-2 large" placeholder="Analyze your tweet..."
+                                            aria-label="Search" aria-describedby="basic-addon2" name="search">
+                                    {% endif %}
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>  
+                    </div>  
+
+                    <h2 class="h4 mb-2 text-gray-800">Sentiment Analysis Result</h2>
+                    <p class="h5 mb-4">Polarity: {{sentiment.0}} Subjectivity: {{sentiment.1}}</p>
 
                     <!-- DataTales Example -->
                     <div class="row">
                     <!-- DataTales Example -->
-                        <div class="col-xl-6 col-lg-5">
+                        <div class="col-xl-6 col-lg-5">                        
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Top Positive Tweets</h6>
