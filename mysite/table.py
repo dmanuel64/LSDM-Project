@@ -28,7 +28,6 @@ class Table:
                         'text', 'hashtags', 'source', 'retweets', 'favorites', 'is_retweet']]
 
         if ':' in query: 
-            print("ere")
             type, keywords = query.split(":")
             if type not in list(df):
                 type = "text"
@@ -41,7 +40,7 @@ class Table:
 
         return results
 
-    def input_sentimental(self, sentence):
+    def input_sentiment(self, sentence):
         polarity = TextBlob(sentence).sentiment.polarity
         subjectivity = TextBlob(sentence).sentiment.subjectivity
 
