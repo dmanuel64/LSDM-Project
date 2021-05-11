@@ -214,13 +214,13 @@ def tables(request):
     
     return render(request, 'tables.html', context)
 
-"""TODO: Enable sentimental analysis on input"""
-def sentimental_analysis(request):
+"""TODO: Enable sentiment analysis on input"""
+def sentiment_analysis(request):
     tab = table.Table()
 
     # if request.GET:
     #     input_sent = request.GET
-    #     polarity, subjectivity = tab.input_sentimental(input_sent)
+    #     polarity, subjectivity = tab.input_sentiment(input_sent)
     #     print(polarity, subjectivity)
     # else:
     results = tab.top_polarity("positive", 10)  
@@ -243,7 +243,7 @@ def sentimental_analysis(request):
                     'sub_data':sub_data, 'obj_data': obj_data}      
      
     
-    return render(request, 'sentimental-analysis.html', context) 
+    return render(request, 'sentiment-analysis.html', context) 
 
 def google_trends(request):
     line = googleTrends.Line()

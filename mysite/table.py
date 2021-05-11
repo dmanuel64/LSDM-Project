@@ -41,7 +41,7 @@ class Table:
 
         return results
 
-    def input_sentimental(self, sentence):
+    def input_sentiment(self, sentence):
         polarity = TextBlob(sentence).sentiment.polarity
         subjectivity = TextBlob(sentence).sentiment.subjectivity
 

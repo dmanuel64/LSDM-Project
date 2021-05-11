@@ -268,7 +268,7 @@ class Pie:
         return list(top_tags[:k].index) , list(top_tags[:k].values)
 
     def sentiment_pie(self):
-        """[Get sentimental analysis ]
+        """[Get sentiment analysis ]
 
         Returns:
             [string]: [sentiment "positive" "neutral" "negative"]
@@ -372,7 +372,7 @@ class Sentiment:
         self.df['sentiment']=pd.Series(np.array(sentiment))
 
     def sentiment_date(self, sentiment_type):
-        """[Get daily sentimental analysis positive, neutral, negative]
+        """[Get daily sentiment analysis positive, neutral, negative]
 
         Args:
             sentiment_type ([integer]): [sentiment "positive" "neutral" "negative"]
@@ -398,7 +398,7 @@ class Sentiment:
         return list(data['date'].values), list(data['vals'].values)
 
     def sentiment_bar(self):
-        """[Get total sentimental analysis]
+        """[Get total sentiment analysis]
 
         Returns:
             [string]: [sentiment labels]
