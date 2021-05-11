@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Social Media Data - Tables</title>
+    <title>{{ user.username }} history</title>
 
     <!-- Custom fonts for this template -->
     <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -113,6 +113,7 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Google Trends</span></a>
             </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -141,16 +142,12 @@
                     </form>
 
                     <!-- Topbar Search -->
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <form action = "" method = "get"></form>
-                            {% if search_item %}
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for tweets..."
-                                    aria-label="Search" aria-describedby="basic-addon2" name="search" value="{{ search_item }}">
-                            {% else %}
                                 <input type="text" class="form-control bg-light border-0 small" placeholder="Search for tweets..."
                                     aria-label="Search" aria-describedby="basic-addon2" name="search">
-                            {% endif %}
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-primary" type="button">
                                         <i class="fas fa-search fa-sm"></i>
@@ -215,7 +212,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Search history</h6>
                         </div>
                         <div class="card-body">
                             <!-- {{ context|safe }} -->
@@ -223,33 +220,17 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>text</th>                                            
-                                            <th>user_name</th>
-                                            <th>user_location</th>
-                                            <th>user_followers</th>
-                                            <th>user_verified</th>
-                                            <th>hashtags</th>
-                                            <th>source</th>
-                                            <th>retweets</th>
-                                            <th>favorites</th>
-                                            <th>is_retweet</th>
+                                            <th>Search</th>                                            
+                                            <th>Time</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        {% if d %}  
-                                        {% for i in d %}
+                                        {% if history %}  
+                                        {% for i in history %}
                                           <tr>
-                                            <td>{{i.text}}</td>                                              
-                                            <td>{{i.user_name}}</td>
-                                            <td>{{i.user_location}}</td>
-                                            <td>{{i.user_followers}}</td>
-                                            <td>{{i.user_verified}}</td>
-                                            <td>{{i.hashtags}}</td>
-                                            <td>{{i.source}}</td>
-                                            <td>{{i.retweets}}</td>
-                                            <td>{{i.favorites}}</td>
-                                            <td>{{i.favorites}}</td>
+                                            <td><a href="/tables/?search={{i.search}}">{{ i.search }}</a></td>                                              
+                                            <td>{{i.sdate}}</td>
                                           </tr>
                                         {% endfor %}
                                         {% endif %}

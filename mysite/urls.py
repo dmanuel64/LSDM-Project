@@ -21,12 +21,22 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name="index"),
+    path('search/', views.search, name="search"),
     path('login/', views.login_page, name="login"),
     path('', views.load_database, name="load_database"),
     path('register/', views.signup, name="register"),
     path('forgot-password/', views.forgot, name="forgot-password"),
-    path('charts/', views.chart,name="charts"),
+    path('tweet-charts/', views.tweet_chart,name="tweet-charts"),
+    path('hashtags-charts/', views.hashtags_chart,name="hashtags-charts"),
+    path('engagement-charts/', views.engagement_chart,name="engagement-charts"),
+    path('account-charts/', views.account_chart,name="account-charts"),
+    path('source-charts/', views.source_chart,name="source-charts"),
+    path('sentiment-charts/', views.sentiment_chart,name="sentiment-charts"),    
+    path('sentiment-analysis/', views.sentiment_analysis,name="sentiment-analysis"),        
+    path('charts/', views.tweet_chart,name="charts"),
     path('tables/', views.tables,name="tables"),
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls'))
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('profile/', views.user_profile, name='user-profile'),
+    path('google-trends/', views.google_trends,name="google-trends")
 ]
