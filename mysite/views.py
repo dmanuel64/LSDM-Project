@@ -218,18 +218,10 @@ def sentiment_analysis(request):
     polarity = 0.0
     subjectivity = 0.0
 
-<<<<<<< HEAD
-    # if request.GET:
-    #     input_sent = request.GET
-    #     polarity, subjectivity = tab.input_sentiment(input_sent)
-    #     print(polarity, subjectivity)
-    # else:
-=======
     if request.GET:
         search = request.GET['search']
-        polarity, subjectivity = tab.input_sentimental(search)
+        polarity, subjectivity = tab.input_sentiment(search)
     
->>>>>>> 665359bfd14ea7710e4bbbcb44f1aa2a7ac4b65f
     results = tab.top_polarity("positive", 10)  
     json_records = results.reset_index().to_json(orient ='records')
     pos_data = json.loads(json_records)
